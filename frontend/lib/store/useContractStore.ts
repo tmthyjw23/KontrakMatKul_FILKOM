@@ -23,6 +23,14 @@ function calculateTotalSks(selectedCourses: Course[]): number {
   return selectedCourses.reduce((total, item) => total + item.sks, 0);
 }
 
+function haveSameCourseIds(left: Course[], right: Course[]): boolean {
+  if (left.length !== right.length) {
+    return false;
+  }
+
+  return left.every((course, index) => course.id === right[index]?.id);
+}
+
 function parseTimeToMinutes(time: string): number | null {
   const [hours, minutes] = time.split(":").map(Number);
 
@@ -101,17 +109,26 @@ export const useContractStore = create<ContractState>((set, get) => ({
   totalSks: 0,
   maxSks: MAX_SKS,
   setCourses: (courses) => {
-    const currentSelectedIds = new Set(
-      get().selectedCourses.map((course) => course.id)
-    );
-    const syncedSelectedCourses = courses.filter((course) =>
-      currentSelectedIds.has(course.id)
-    );
+    set((state) => {
+      const currentSelectedIds = new Set(
+        state.selectedCourses.map((course) => course.id)
+      );
+      const syncedSelectedCourses = courses.filter((course) =>
+        currentSelectedIds.has(course.id)
+      );
 
-    set({
-      courses,
-      selectedCourses: syncedSelectedCourses,
-      totalSks: calculateTotalSks(syncedSelectedCourses),
+      if (
+        haveSameCourseIds(state.courses, courses) &&
+        haveSameCourseIds(state.selectedCourses, syncedSelectedCourses)
+      ) {
+        return state;
+      }
+
+      return {
+        courses,
+        selectedCourses: syncedSelectedCourses,
+        totalSks: calculateTotalSks(syncedSelectedCourses),
+      };
     });
   },
   clearSelectedCourses: () => {

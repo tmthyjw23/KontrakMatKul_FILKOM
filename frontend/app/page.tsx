@@ -24,7 +24,7 @@ export default function Home() {
   const totalSks = useContractStore((state: ContractState) => state.totalSks);
   const maxSks = useContractStore((state: ContractState) => state.maxSks);
   const {
-    data: fetchedCourses = [],
+    data: fetchedCourses,
     isLoading: isCoursesLoading,
     isError: isCoursesError,
     error: coursesError,
@@ -39,6 +39,10 @@ export default function Home() {
     isCoursesLoading;
 
   useEffect(() => {
+    if (!fetchedCourses) {
+      return;
+    }
+
     setCourses(fetchedCourses);
   }, [fetchedCourses, setCourses]);
 

@@ -14,7 +14,7 @@ type SksCounterProps = {
 
 export function SksCounter({
   totalSks,
-  maxSks = 24,
+  maxSks = 20,
   selectedCount,
   isCoursesLoading = false,
 }: SksCounterProps) {
