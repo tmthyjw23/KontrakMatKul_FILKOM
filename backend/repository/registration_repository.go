@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"time"
 
 	"kontrak-matkul/domain"
 )
@@ -19,19 +20,28 @@ func NewRegistrationRepository(db *sql.DB) domain.RegistrationRepository {
 }
 
 // Create inserts a new registration record into the database.
+// MySQL does not support RETURNING, so we use LastInsertId() to retrieve the new ID
+// and set CreatedAt manually.
 func (r *registrationRepository) Create(ctx context.Context, reg *domain.Registration) error {
 	query := `
 		INSERT INTO registrations (student_nim, course_code, status)
-		VALUES ($1, $2, 'registered')
-		RETURNING id, created_at
+		VALUES (?, ?, 'registered')
 	`
 
-	row := r.db.QueryRowContext(ctx, query, reg.StudentNIM, reg.CourseCode)
-	if err := row.Scan(&reg.ID, &reg.CreatedAt); err != nil {
+	result, err := r.db.ExecContext(ctx, query, reg.StudentNIM, reg.CourseCode)
+	if err != nil {
 		return fmt.Errorf("error creating registration: %w", err)
 	}
 
+	// MySQL equivalent of PostgreSQL's RETURNING id
+	lastID, err := result.LastInsertId()
+	if err != nil {
+		return fmt.Errorf("error retrieving last insert ID: %w", err)
+	}
+
+	reg.ID = int(lastID)
 	reg.Status = "registered"
+	reg.CreatedAt = time.Now().Format(time.DateTime)
 	return nil
 }
 
@@ -40,7 +50,7 @@ func (r *registrationRepository) GetByNIM(ctx context.Context, nim string) ([]do
 	query := `
 		SELECT id, student_nim, course_code, status, created_at
 		FROM registrations
-		WHERE student_nim = $1
+		WHERE student_nim = ?
 		ORDER BY created_at DESC
 	`
 
@@ -110,7 +120,7 @@ func (r *registrationRepository) GetAll(ctx context.Context) ([]domain.Registrat
 
 // Cancel updates a registration's status to "cancelled".
 func (r *registrationRepository) Cancel(ctx context.Context, id int) error {
-	query := `UPDATE registrations SET status = 'cancelled' WHERE id = $1`
+	query := `UPDATE registrations SET status = 'cancelled' WHERE id = ?`
 
 	result, err := r.db.ExecContext(ctx, query, id)
 	if err != nil {

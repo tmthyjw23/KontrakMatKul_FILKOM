@@ -60,7 +60,7 @@ func (r *courseRepository) GetByCode(ctx context.Context, code string) (*domain.
 	query := `
 		SELECT code, name, class, lecturer_name, credits, cohort_target
 		FROM courses
-		WHERE code = $1
+		WHERE code = ?
 	`
 
 	row := r.db.QueryRowContext(ctx, query, code)
@@ -88,7 +88,7 @@ func (r *courseRepository) GetByCode(ctx context.Context, code string) (*domain.
 func (r *courseRepository) Create(ctx context.Context, course *domain.Course) error {
 	query := `
 		INSERT INTO courses (code, name, class, lecturer_name, credits, cohort_target)
-		VALUES ($1, $2, $3, $4, $5, $6)
+		VALUES (?, ?, ?, ?, ?, ?)
 	`
 
 	_, err := r.db.ExecContext(ctx, query,
@@ -108,7 +108,7 @@ func (r *courseRepository) Create(ctx context.Context, course *domain.Course) er
 
 // Delete removes a course record from the database by its code.
 func (r *courseRepository) Delete(ctx context.Context, code string) error {
-	query := `DELETE FROM courses WHERE code = $1`
+	query := `DELETE FROM courses WHERE code = ?`
 
 	result, err := r.db.ExecContext(ctx, query, code)
 	if err != nil {

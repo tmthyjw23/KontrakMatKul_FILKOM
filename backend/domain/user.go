@@ -17,6 +17,10 @@ type Student struct {
 type UserRepository interface {
 	GetByNIM(ctx context.Context, nim string) (*Student, error)
 	GetAll(ctx context.Context) ([]Student, error)
+	// GetPasswordHashByNIM returns only the bcrypt password hash for a given NIM.
+	// The hash is intentionally NOT a field on the Student struct to prevent
+	// it from being accidentally serialized into JSON API responses.
+	GetPasswordHashByNIM(ctx context.Context, nim string) (string, error)
 }
 
 // UserUsecase defines the contract for User business logic operations.

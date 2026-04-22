@@ -2,6 +2,7 @@ package http
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"kontrak-matkul/domain"
@@ -124,4 +125,28 @@ func (h *StudentHandler) GetMyRegistrationsHandler(w http.ResponseWriter, r *htt
 	}
 
 	writeJSON(w, http.StatusOK, registrations)
+}
+
+// CancelRegistrationHandler handles DELETE /api/v1/student/registrations/{id}
+func (h *StudentHandler) CancelRegistrationHandler(w http.ResponseWriter, r *http.Request) {
+	idStr := r.PathValue("id")
+	if idStr == "" {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": "Registration ID is required"})
+		return
+	}
+
+	var id int
+	if _, err := fmt.Sscanf(idStr, "%d", &id); err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": "Invalid registration ID format"})
+		return
+	}
+
+	if err := h.RegistrationUsecase.CancelRegistration(r.Context(), id); err != nil {
+		writeJSON(w, http.StatusUnprocessableEntity, map[string]string{"error": err.Error()})
+		return
+	}
+
+	writeJSON(w, http.StatusOK, map[string]string{
+		"message": "Registration cancelled successfully",
+	})
 }

@@ -9,23 +9,21 @@ import (
 )
 
 // userRepository is the concrete implementation of domain.UserRepository.
-// It holds a reference to the *sql.DB connection pool.
 type userRepository struct {
 	db *sql.DB
 }
 
 // NewUserRepository creates and returns a new userRepository.
-// This constructor is exported so it can be called from main.go for DI.
 func NewUserRepository(db *sql.DB) domain.UserRepository {
 	return &userRepository{db: db}
 }
 
-// GetByNIM retrieves a single student record by their NIM from the database.
+// GetByNIM retrieves a single student record by their NIM.
 func (r *userRepository) GetByNIM(ctx context.Context, nim string) (*domain.Student, error) {
 	query := `
 		SELECT nim, name, faculty, study_program, cohort_year, role
 		FROM students
-		WHERE nim = $1
+		WHERE nim = ?
 	`
 
 	row := r.db.QueryRowContext(ctx, query, nim)
@@ -47,6 +45,22 @@ func (r *userRepository) GetByNIM(ctx context.Context, nim string) (*domain.Stud
 	}
 
 	return &s, nil
+}
+
+// GetPasswordHashByNIM retrieves only the password hash for a given student.
+func (r *userRepository) GetPasswordHashByNIM(ctx context.Context, nim string) (string, error) {
+	query := `SELECT password_hash FROM students WHERE nim = ?`
+	
+	row := r.db.QueryRowContext(ctx, query, nim)
+	var hash string
+	if err := row.Scan(&hash); err != nil {
+		if err == sql.ErrNoRows {
+			return "", fmt.Errorf("student with NIM %s not found", nim)
+		}
+		return "", fmt.Errorf("error fetching password hash: %w", err)
+	}
+	
+	return hash, nil
 }
 
 // GetAll retrieves all student records from the database.
