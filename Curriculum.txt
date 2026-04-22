@@ -4,7 +4,7 @@ KURIKULUM FILKOM (RAPI PER SEMESTER)
 
 PRA-SEMESTER
 ------------
-1. Matematika
+1. Matematika (Andrew Tambunan )
 2. Keterampilan Komputer Dasar
 3. Bahasa Inggris Dasar
 4. Pendidikan Keterampilan
@@ -14,45 +14,45 @@ PRA-SEMESTER
 SEMESTER 1
 ----------
 1. Introduction to Programming
-2. Introduction to Computational Thinking
-3. Dasar Aljabar Linear
-4. Pendidikan Pancasila
-5. Teladan Kehidupan I
-6. Bahasa Inggris Pra Dasar
+2. Introduction to Computational Thinking (Dosen Yahuda, Edson.)
+3. Dasar Aljabar Linear (Dosen: Sahulata, Reynoldus.)
+4. Pendidikan Pancasila (Dosen: Silinaung, Max.)
+5. Teladan Kehidupan I (Dosen: Watopa, James)
+6. Bahasa Inggris Pra Dasar 
 
 
 SEMESTER 2
 ----------
-1. Struktur Data dan Algoritma
-2. Matematika Diskrit
-3. Logika Informatika
-4. Bahasa Indonesia
-5. Pendidikan Kewarganegaraan
-6. Teladan Kehidupan II
-7. Filsafat Pendidikan Kristen
-8. Bahasa Inggris Dasar
+1. Struktur Data dan Algoritma (Dosen Tangka, George.), (Dosen Laoh, Lidya Citra.)
+2. Matematika Diskrit (Dosen: Camilla, Raisa)
+3. Logika Informatika (Dosen: Najoan, Regi), (Dosen: Tombeng, Marcell)
+4. Bahasa Indonesia (Dosen: Yahuda, Edson)
+5. Pendidikan Kewarganegaraan (Dosen: Silinaung, Max)
+6. Teladan Kehidupan II (Dosen: Watopa, James)
+7. Filsafat Pendidikan Kristen (Dosen: Lotulung, Mareike)
+8. Bahasa Inggris Dasar 
 
 
 SEMESTER 3
 ----------
-1. Organisasi dan Arsitektur Komputer
-2. Perancangan Web
-3. Pengantar Basisdata
-4. Statistik dan Probabilitas
-5. Kalkulus
-6. Prinsip-Prinsip Nilai Kristiani
-7. Bahasa Inggris Pra Menengah I
+1. Organisasi dan Arsitektur Komputer (Dosen: Waworundeng, Jacquline)
+2. Perancangan Web (Dosen: Najoan, Regi)
+3. Pengantar Basisdata (Dosen: Mandias, Green Ferry)
+4. Statistik dan Probabilitas (Dosen: Camilla, Raisa)
+5. Kalkulus (Dosen: Sahulata, Reynoldus)
+6. Prinsip-Prinsip Nilai Kristiani (Dosen: Lauda, Woy)
+7. Bahasa Inggris Pra Menengah (Dosen: Lumoindong, Boy)
 
 
 SEMESTER 4
 ----------
-1. Jaringan Komputer I
-2. Teknik Automata dan Kompilasi
-3. Pemrograman Berorientasi Objek
-4. Sistem Cerdas
-5. Sistem Manajemen Basisdata
-6. Orang Muda dan Dunia
-7. Bahasa Inggris Pra Menengah II
+1. Jaringan Komputer 
+2. Teknik Automata dan Kompilasi (Dosen: Sahulata, Reynoldus)
+3. Pemrograman Berorientasi Objek (Dosen: Najoan, Regi), (Dosen: Tangka, George)
+4. Sistem Cerdas (Dosen: Sandaag, Green)
+5. Sistem Manajemen Basisdata (Dosen: Mandias, Green)
+6. Orang Muda dan Dunia (Dosen: Lumingkewas, Edwin)
+7. Bahasa Inggris Pra Menengah II (Dosen; Sanger, Alan)
 
 
 SEMESTER 5
