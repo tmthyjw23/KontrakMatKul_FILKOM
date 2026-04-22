@@ -11,9 +11,11 @@ import (
 )
 
 const ContextUserIDKey = "user_id"
+const ContextUserRoleKey = "user_role"
 
 type jwtClaims struct {
 	UserID uint64 `json:"user_id"`
+	Role   string `json:"role"`
 	jwt.RegisteredClaims
 }
 
@@ -61,6 +63,7 @@ func JWT(secret string, logger *zap.Logger) gin.HandlerFunc {
 		}
 
 		ctx.Set(ContextUserIDKey, claims.UserID)
+		ctx.Set(ContextUserRoleKey, claims.Role)
 		ctx.Next()
 	}
 }

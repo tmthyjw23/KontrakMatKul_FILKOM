@@ -50,9 +50,22 @@ func main() {
 	//   -> usecase/service
 	//   -> handler
 	//   -> routes
+	courseRepository := mysql.NewCourseRepository(db, logger)
+	courseUsecase := usecase.NewCourseUsecase(courseRepository, logger)
+	courseHandler := handlers.NewCourseHandler(courseUsecase, logger)
+
 	enrollmentRepository := mysql.NewEnrollmentRepository(db, logger)
 	enrollmentUsecase := usecase.NewEnrollmentUsecase(enrollmentRepository, logger)
 	enrollmentHandler := handlers.NewEnrollmentHandler(enrollmentUsecase, logger)
+
+	userRepository := mysql.NewUserRepository(db, logger)
+	authUsecase := usecase.NewAuthUsecase(userRepository, cfg.JWTSecret, logger)
+	authHandler := handlers.NewAuthHandler(authUsecase)
+
+	settingRepository := mysql.NewSystemSettingsRepository(db, logger)
+	periodUsecase := usecase.NewPeriodUsecase(settingRepository, logger)
+	periodHandler := handlers.NewPeriodHandler(periodUsecase)
+
 	jwtMiddleware := middlewares.JWT(cfg.JWTSecret, logger)
 
 	if cfg.AppEnv == "production" {
@@ -62,7 +75,14 @@ func main() {
 	router := gin.New()
 	router.Use(gin.Recovery())
 
-	routes.SetupRoutes(router, enrollmentHandler, jwtMiddleware)
+	routes.SetupRoutes(
+		router,
+		courseHandler,
+		enrollmentHandler,
+		authHandler,
+		periodHandler,
+		jwtMiddleware,
+	)
 
 	server := &http.Server{
 		Addr:         cfg.Address(),
