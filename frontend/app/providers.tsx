@@ -4,12 +4,23 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Toaster } from "sonner";
+import { useAuthStore } from "@/lib/store/useAuthStore";
 
 type ProvidersProps = {
   children: React.ReactNode;
 };
+
+function AuthBootstrap({ children }: { children: React.ReactNode }) {
+  const loadFromStorage = useAuthStore((state) => state.loadFromStorage);
+
+  useEffect(() => {
+    loadFromStorage();
+  }, [loadFromStorage]);
+
+  return <>{children}</>;
+}
 
 export function Providers({ children }: ProvidersProps) {
   const [queryClient] = useState(
@@ -31,14 +42,16 @@ export function Providers({ children }: ProvidersProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {children}
-      <Toaster
-        position="top-right"
-        richColors={false}
-        toastOptions={{
-          className: "!border !border-white/10 !bg-zinc-950/90 !text-zinc-100",
-        }}
-      />
+      <AuthBootstrap>
+        {children}
+        <Toaster
+          position="top-right"
+          richColors={false}
+          toastOptions={{
+            className: "!border !border-white/10 !bg-zinc-950/90 !text-zinc-100",
+          }}
+        />
+      </AuthBootstrap>
     </QueryClientProvider>
   );
 }

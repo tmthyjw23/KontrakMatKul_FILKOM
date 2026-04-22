@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useAuth } from "@/lib/store/useAuthStore";
 
 import { CourseCard } from "@/components/dashboard/course-card";
 import { ScheduleGrid } from "@/components/dashboard/schedule-grid";
@@ -13,6 +15,15 @@ import { useContractStore } from "@/lib/store/useContractStore";
 import type { ContractState } from "@/lib/store/useContractStore";
 
 export default function Home() {
+  const router = useRouter();
+  const { isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push("/login");
+    }
+  }, [isAuthenticated, router]);
+
   const courses = useContractStore((state: ContractState) => state.courses);
   const setCourses = useContractStore((state: ContractState) => state.setCourses);
   const clearSelectedCourses = useContractStore(
