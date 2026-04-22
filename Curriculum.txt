@@ -1,0 +1,138 @@
+==============================
+KURIKULUM FILKOM (RAPI PER SEMESTER)
+==============================
+
+PRA-SEMESTER
+------------
+1. Matematika
+2. Keterampilan Komputer Dasar
+3. Bahasa Inggris Dasar
+4. Pendidikan Keterampilan
+5. Physical and Health Education
+
+
+SEMESTER 1
+----------
+1. Introduction to Programming
+2. Introduction to Computational Thinking
+3. Dasar Aljabar Linear
+4. Pendidikan Pancasila
+5. Teladan Kehidupan I
+6. Bahasa Inggris Pra Dasar
+
+
+SEMESTER 2
+----------
+1. Struktur Data dan Algoritma
+2. Matematika Diskrit
+3. Logika Informatika
+4. Bahasa Indonesia
+5. Pendidikan Kewarganegaraan
+6. Teladan Kehidupan II
+7. Filsafat Pendidikan Kristen
+8. Bahasa Inggris Dasar
+
+
+SEMESTER 3
+----------
+1. Organisasi dan Arsitektur Komputer
+2. Perancangan Web
+3. Pengantar Basisdata
+4. Statistik dan Probabilitas
+5. Kalkulus
+6. Prinsip-Prinsip Nilai Kristiani
+7. Bahasa Inggris Pra Menengah I
+
+
+SEMESTER 4
+----------
+1. Jaringan Komputer I
+2. Teknik Automata dan Kompilasi
+3. Pemrograman Berorientasi Objek
+4. Sistem Cerdas
+5. Sistem Manajemen Basisdata
+6. Orang Muda dan Dunia
+7. Bahasa Inggris Pra Menengah II
+
+
+SEMESTER 5
+----------
+1. Jaringan Komputer II
+2. Interaksi Manusia dan Komputer
+3. Konsep Sistem Operasi
+4. Pengembangan Web Front-End
+5. Analisis dan Perancangan Sistem
+6. Metodologi Penelitian
+7. Kehidupan Keluarga
+
+
+SEMESTER 6
+----------
+1. Pemrograman Visual
+2. Pemrograman Sistem
+3. Grafika Komputer
+4. Pengantar Pengembangan Game
+5. Kecerdasan Buatan
+6. Penambangan dan Pergudangan Data
+7. Pengembangan Web Back-End
+8. Etika Komputer
+9. Rekayasa Perangkat Lunak
+10. Pengembangan Perangkat Bergerak
+11. Skripsi I
+12. Kehidupan di Akhir Zaman
+
+
+SEMESTER 7
+----------
+1. Robotika
+2. Kewirausahaan (Project Capstone)
+3. Skripsi II
+
+
+SEMESTER 8
+----------
+Core Courses
+1. Prinsip-Prinsip Desain Kreatif
+2. Keamanan Komputer
+3. Desain untuk Visualisasi dan Komputer
+4. Pengantar Animasi
+5. Internet of Things
+
+Industrial Experience / Independent Study
+6. Industrial Experience in IT I
+7. IT Practice in Industrial Experience I
+8. Professional Development in IT Industry I
+9. Elective Independent Study 1
+10. Elective Independent Study 2
+11. Elective Independent Study 3
+
+12. Industrial Experience in IT II
+13. IT Practice in Industrial Experience II
+14. Professional Development in IT Industry II
+15. Elective Independent Study 4
+16. Elective Independent Study 5
+17. Elective Independent Study 6
+18. Elective Independent Study 7
+19. Elective Independent Study 8
+20. Elective Independent Study 9
+21. Elective Independent Study 10
+22. Elective Independent Study 11
+
+AI / Advanced Computing Track
+23. Pemrosesan Bahasa Alami
+24. Pembelajaran Mesin
+25. Pencarian Informasi
+26. Komputer Visi
+
+Software Engineering Track
+27. Rekayasa DevOps
+28. Manajemen Proyek
+29. Verifikasi dan Validasi Perangkat Lunak
+
+English
+30. Bahasa Inggris 6
+31. Bahasa Inggris 7
+32. Bahasa Inggris 8
+33. Bahasa Inggris 9
+
+==============================
