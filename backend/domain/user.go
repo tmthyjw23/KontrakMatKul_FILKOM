@@ -2,22 +2,26 @@ package domain
 
 import "context"
 
-// User represents the student or admin user in the system.
-type User struct {
-	NIM          string `json:"nim"`
-	Name         string `json:"name"`
-	Faculty      string `json:"faculty"`
-	StudyProgram string `json:"study_program"`
-	CohortYear   int    `json:"cohort_year"`
-	Role         string `json:"role"`
+// Student represents a registered student user in the system.
+type Student struct {
+	NIM          string `json:"nim"           db:"nim"`
+	Name         string `json:"name"          db:"name"`
+	Faculty      string `json:"faculty"       db:"faculty"`
+	StudyProgram string `json:"study_program" db:"study_program"`
+	CohortYear   int    `json:"cohort_year"   db:"cohort_year"`
+	Role         string `json:"role"          db:"role"`
 }
 
-// UserRepository outlines data storage operations for User.
+// UserRepository defines the contract for User data storage operations.
+// Concrete implementations will reside in the repository layer.
 type UserRepository interface {
-	GetByNIM(ctx context.Context, nim string) (*User, error)
+	GetByNIM(ctx context.Context, nim string) (*Student, error)
+	GetAll(ctx context.Context) ([]Student, error)
 }
 
-// UserUsecase outlines business logic operations for User.
+// UserUsecase defines the contract for User business logic operations.
+// Concrete implementations will reside in the usecase layer.
 type UserUsecase interface {
-	GetProfile(ctx context.Context, nim string) (*User, error)
+	GetProfile(ctx context.Context, nim string) (*Student, error)
+	GetAllStudents(ctx context.Context) ([]Student, error)
 }

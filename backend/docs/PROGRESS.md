@@ -1,33 +1,102 @@
-# Project Progress Form: Sistem Kontrak Mata Kuliah
+# Project Progress: Sistem Kontrak Mata Kuliah
 
-*Changelog and tracking of tasks completed.*
+> Changelog for the `jordy-backend` branch.
 
-## Version: Domain & Handlers Skeleton (Step 2)
+---
 
-### Completed Features:
+## ✅ Step 4 — Concrete Repository, Usecase, DB Schema & Full DI Wiring
+*Date: 2026-04-22*
 
-**1. Defined Core Domain Models (`domain` layer):**
-- **`domain/user.go`**: 
-  - Added `User` struct including fields for `NIM`, `Name`, `Faculty`, `StudyProgram`, `CohortYear` (Angkatan), and `Role`, nicely mapped with `json` tags. 
-  - Implemented initial skeletons for `UserRepository` and `UserUsecase` interfaces.
-- **`domain/course.go`**: 
-  - Added `Course` bounding structure parsing properties such as `Code`, `Name`, `Class`, `Credits`, etc.
-  - Linked `Schedule` structure with timing properties like `Day`, `StartTime`, `EndTime`, `Room`, and `AdditionalNotes`. 
-  - Implemented skeleton `CourseRepository` and `CourseUsecase` interfaces.
+### Overview
+This step implements the two innermost layers of Clean Architecture — **Repository** (data access) and **Usecase** (business logic) — with concrete Go structs. It also introduces the `Registration` domain, the PostgreSQL schema migration, and fully wires the dependency injection chain in `main.go`. All `// TODO` stubs in the handlers are now resolved.
 
-**2. Refactored HTTP Handlers (`delivery/http` layer):**
-- Standardized declarative handler definitions following Clean Architecture via interface injection structures.
-- Migrated out generic string logic from generic loops into decoupled method pointers mapping specifically to:
-  - `AdminHandler`
-  - `StudentHandler`
-- Preserved strict `net/http` implementations while exposing pointer references (`*http.Request`). 
+---
 
-**3. Wired ServeMux Setup (`main.go`):**
-- Instantiated decoupled application controllers using basic DI mapping passing explicit `nil` stubs for internal business rules.
-- Transitioned path bindings integrating handler methods properly against Role Middleware implementations using Go 1.22's standardized `.HandleFunc("METHOD /path", handler)` syntax structure.
+### New Files
 
-### Next Steps / Pending Elements:
+#### `domain/registration.go`
+- Added `Registration` struct with fields: `ID`, `StudentNIM`, `CourseCode`, `Status`, `CreatedAt`.
+- Defined `RegistrationRepository` interface: `Create`, `GetByNIM`, `GetAll`, `Cancel`.
+- Defined `RegistrationUsecase` interface: `RegisterCourse`, `GetRegistrationsByNIM`, `GetAllRegistrations`, `CancelRegistration`.
 
-- Prepare specific database connections and DTO models.
-- Implement strictly defined concrete business rule functions across the `usecase` directories binding correctly toward generic requests mapping models.
-- Set up data layers and implementations connecting directly via standard SQL logic (database mappings) located in `repository`.
+#### `repository/user_repository.go`
+- Concrete `userRepository` backed by `*sql.DB`.
+- Implements `GetByNIM` (single row scan) and `GetAll` (multi-row scan).
+- Uses safe `$1` PostgreSQL placeholder syntax.
+
+#### `repository/course_repository.go`
+- Concrete `courseRepository` backed by `*sql.DB`.
+- Implements `FetchAll`, `GetByCode`, `Create`, `Delete`.
+- `Delete` checks `RowsAffected` to return a meaningful not-found error.
+
+#### `repository/registration_repository.go`
+- Concrete `registrationRepository` backed by `*sql.DB`.
+- `Create` uses `RETURNING id, created_at` to populate the struct after insert.
+- Implements `GetByNIM`, `GetAll`, `Cancel`.
+
+#### `usecase/user_usecase.go`
+- Concrete `userUsecase`; wraps `UserRepository`.
+- Validates that NIM is non-empty before delegating.
+
+#### `usecase/course_usecase.go`
+- Concrete `courseUsecase`; wraps `CourseRepository`.
+- Business rules: code/name required, credits must be positive.
+- `DeleteCourse` fetches the course first to surface a clear not-found error.
+
+#### `usecase/registration_usecase.go`
+- Concrete `registrationUsecase`; wraps both `RegistrationRepository` and `CourseRepository`.
+- **Business Rule 1:** Course must exist before registering.
+- **Business Rule 2:** Prevents duplicate active registrations for the same student/course pair.
+
+#### `docs/migrations/001_initial_schema.sql`
+- PostgreSQL DDL for all 4 tables: `students`, `courses`, `schedules`, `registrations`.
+- Foreign key constraints with `ON DELETE CASCADE`.
+- `UNIQUE (student_nim, course_code)` constraint on `registrations` to enforce DB-level deduplication.
+
+---
+
+### Modified Files
+
+#### `delivery/http/admin_handler.go`
+- `NewAdminHandler` now accepts `RegistrationUsecase` as a 3rd argument.
+- All `// TODO` stubs replaced with real usecase calls.
+- Added `GetAllRegistrationsHandler` → `GET /api/v1/admin/registrations`.
+
+#### `delivery/http/student_handler.go`
+- `NewStudentHandler` now accepts `RegistrationUsecase` as a 3rd argument.
+- All `// TODO` stubs replaced with real usecase calls.
+- `RegisterCourseHandler` now expects `{ "nim": "...", "course_code": "..." }` body.
+- Added `GetMyRegistrationsHandler` → `GET /api/v1/student/registrations/{nim}`.
+
+#### `main.go`
+- Added `initDB()` helper; reads `DATABASE_URL` env var and pings the connection.
+- Full DI chain: `Repository → Usecase → Handler`.
+- Added `github.com/lib/pq` as blank import for the PostgreSQL driver.
+- Two new routes wired: `GET /admin/registrations`, `GET /student/registrations/{nim}`.
+
+---
+
+### Updated Route Table
+
+| Method   | Path                                      | Handler                            | Role    |
+|----------|-------------------------------------------|------------------------------------|---------|
+| `GET`    | `/api/v1/admin/dashboard`                 | `AdminHandler.Dashboard`           | Admin   |
+| `GET`    | `/api/v1/admin/students`                  | `AdminHandler.GetAllStudents`      | Admin   |
+| `POST`   | `/api/v1/admin/courses`                   | `AdminHandler.AddCourse`           | Admin   |
+| `DELETE` | `/api/v1/admin/courses/{code}`            | `AdminHandler.DeleteCourse`        | Admin   |
+| `GET`    | `/api/v1/admin/registrations`             | `AdminHandler.GetAllRegistrations` | Admin   |
+| `GET`    | `/api/v1/student/dashboard`               | `StudentHandler.Dashboard`         | Student |
+| `GET`    | `/api/v1/student/profile/{nim}`           | `StudentHandler.GetProfile`        | Student |
+| `POST`   | `/api/v1/student/courses/register`        | `StudentHandler.RegisterCourse`    | Student |
+| `GET`    | `/api/v1/student/registrations/{nim}`     | `StudentHandler.GetMyRegistrations`| Student |
+| `GET`    | `/api/v1/courses`                         | `StudentHandler.GetAllCourses`     | Public  |
+| `GET`    | `/api/v1/courses/{code}`                  | `StudentHandler.GetCourseDetail`   | Public  |
+
+---
+
+### Next Steps
+- [ ] Replace `X-User-Role` header simulation in `middleware.go` with real **JWT validation**.
+- [ ] Add an `Admin` domain model (separate from `Student`) for admin authentication.
+- [ ] Write a `GET /api/v1/student/cancels/{id}` endpoint for `CancelRegistration`.
+- [ ] Add environment variable loading from a `.env` file (consider `os.LookupEnv` + a startup check).
+- [ ] Write integration tests against a test database.
