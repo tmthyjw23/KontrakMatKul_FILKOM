@@ -4,53 +4,6 @@ import { create } from "zustand";
 
 import type { Course, Schedule, VisualConflictMap } from "@/src/types/course";
 
-const mockCourses: Course[] = [
-  {
-    id: "IFAP272",
-    code: "IFAP272",
-    name: "Automata",
-    sks: 3,
-    lecturer: "Dr. Maria Kairupan",
-    color: "from-emerald-300/18 via-white/8 to-white/5",
-    schedules: [
-      {
-        day: "Senin",
-        start_time: "10:10",
-        end_time: "11:30",
-        room: "GK-302",
-      },
-      {
-        day: "Rabu",
-        start_time: "10:10",
-        end_time: "11:30",
-        room: "GK-302",
-      },
-    ],
-  },
-  {
-    id: "IFMI252",
-    code: "IFMI252",
-    name: "Database",
-    sks: 3,
-    lecturer: "Ir. Jonathan Paat, M.Kom",
-    color: "from-white/14 via-white/7 to-emerald-200/10",
-    schedules: [
-      {
-        day: "Selasa",
-        start_time: "07:10",
-        end_time: "08:30",
-        room: "LAB-201",
-      },
-      {
-        day: "Kamis",
-        start_time: "07:10",
-        end_time: "08:30",
-        room: "LAB-201",
-      },
-    ],
-  },
-];
-
 const MAX_SKS = 24;
 
 export interface ContractState {
@@ -58,10 +11,16 @@ export interface ContractState {
   selectedCourses: Course[];
   totalSks: number;
   maxSks: number;
+  setCourses: (courses: Course[]) => void;
+  clearSelectedCourses: () => void;
   addCourse: (courseId: Course["id"]) => void;
   removeCourse: (courseId: Course["id"]) => void;
   getVisualConflictMap: () => VisualConflictMap;
   hasVisualConflict: (courseId: Course["id"]) => boolean;
+}
+
+function calculateTotalSks(selectedCourses: Course[]): number {
+  return selectedCourses.reduce((total, item) => total + item.sks, 0);
 }
 
 function parseTimeToMinutes(time: string): number | null {
@@ -137,10 +96,30 @@ function buildVisualConflictMap(selectedCourses: Course[]): VisualConflictMap {
 }
 
 export const useContractStore = create<ContractState>((set, get) => ({
-  courses: mockCourses,
+  courses: [],
   selectedCourses: [],
   totalSks: 0,
   maxSks: MAX_SKS,
+  setCourses: (courses) => {
+    const currentSelectedIds = new Set(
+      get().selectedCourses.map((course) => course.id)
+    );
+    const syncedSelectedCourses = courses.filter((course) =>
+      currentSelectedIds.has(course.id)
+    );
+
+    set({
+      courses,
+      selectedCourses: syncedSelectedCourses,
+      totalSks: calculateTotalSks(syncedSelectedCourses),
+    });
+  },
+  clearSelectedCourses: () => {
+    set({
+      selectedCourses: [],
+      totalSks: 0,
+    });
+  },
   addCourse: (courseId) => {
     const { courses, selectedCourses } = get();
     const course = courses.find((item) => item.id === courseId);
@@ -159,7 +138,7 @@ export const useContractStore = create<ContractState>((set, get) => ({
 
     set({
       selectedCourses: nextSelectedCourses,
-      totalSks: nextSelectedCourses.reduce((total, item) => total + item.sks, 0),
+      totalSks: calculateTotalSks(nextSelectedCourses),
     });
   },
   removeCourse: (courseId) => {
@@ -169,9 +148,10 @@ export const useContractStore = create<ContractState>((set, get) => ({
 
     set({
       selectedCourses: nextSelectedCourses,
-      totalSks: nextSelectedCourses.reduce((total, item) => total + item.sks, 0),
+      totalSks: calculateTotalSks(nextSelectedCourses),
     });
   },
   getVisualConflictMap: () => buildVisualConflictMap(get().selectedCourses),
-  hasVisualConflict: (courseId) => Boolean(buildVisualConflictMap(get().selectedCourses)[courseId]?.length),
+  hasVisualConflict: (courseId) =>
+    Boolean(buildVisualConflictMap(get().selectedCourses)[courseId]?.length),
 }));

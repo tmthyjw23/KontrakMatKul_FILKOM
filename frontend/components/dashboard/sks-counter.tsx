@@ -8,11 +8,15 @@ import { GlassCard } from "@/components/ui/glass-card";
 type SksCounterProps = {
   totalSks: number;
   maxSks?: number;
+  selectedCount: number;
+  isCoursesLoading?: boolean;
 };
 
 export function SksCounter({
   totalSks,
-  maxSks = 23,
+  maxSks = 24,
+  selectedCount,
+  isCoursesLoading = false,
 }: SksCounterProps) {
   const progress = Math.min((totalSks / maxSks) * 100, 100);
   const animatedValue = useMotionValue(totalSks);
@@ -47,6 +51,21 @@ export function SksCounter({
             Gauge ini memberi batas visual sebelum nanti validasi final dijalankan
             oleh backend Go.
           </p>
+          <div className="mt-4 flex items-center gap-3 text-xs">
+            <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-zinc-400">
+              {selectedCount} course selected
+            </span>
+            <span
+              className={[
+                "rounded-full border px-3 py-1",
+                isCoursesLoading
+                  ? "border-white/10 bg-white/[0.04] text-zinc-400"
+                  : "border-emerald-300/20 bg-emerald-300/[0.08] text-emerald-300",
+              ].join(" ")}
+            >
+              {isCoursesLoading ? "Syncing curriculum" : "API connected"}
+            </span>
+          </div>
         </div>
 
         <div className="w-full max-w-md">
