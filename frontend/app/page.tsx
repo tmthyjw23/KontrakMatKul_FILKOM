@@ -1,65 +1,95 @@
-import Image from "next/image";
+"use client";
+
+import { CourseCard } from "@/components/dashboard/course-card";
+import { ScheduleGrid } from "@/components/dashboard/schedule-grid";
+import { SksCounter } from "@/components/dashboard/sks-counter";
+import { GlassCard } from "@/components/ui/glass-card";
+import { useContractStore } from "@/lib/store/useContractStore";
+import type { ContractState } from "@/lib/store/useContractStore";
 
 export default function Home() {
+  const courses = useContractStore((state: ContractState) => state.courses);
+  const selectedCourses = useContractStore(
+    (state: ContractState) => state.selectedCourses
+  );
+  const totalSks = useContractStore((state: ContractState) => state.totalSks);
+  const maxSks = useContractStore((state: ContractState) => state.maxSks);
+  const isConfirmDisabled = totalSks === 0 || totalSks > maxSks;
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <main className="h-screen overflow-hidden px-4 py-4 sm:px-6 sm:py-6">
+      <div className="bento-grid h-full min-h-0">
+        <section className="col-span-12 min-h-0 xl:col-span-4">
+          <GlassCard className="flex h-full min-h-0 flex-col overflow-hidden p-0">
+            <div className="border-b border-white/10 bg-black/20 px-5 py-5 sm:px-6">
+              <p className="text-xs uppercase tracking-[0.35em] text-zinc-500">
+                Curriculum
+              </p>
+              <h1 className="mt-3 text-3xl font-semibold tracking-tight text-white">
+                FILKOM course contract
+              </h1>
+              <p className="mt-3 max-w-xl text-sm leading-6 text-zinc-400">
+                Panel kiri menampilkan mata kuliah yang tersedia. Setiap klik
+                langsung mengirim course ke planner mingguan di sebelah kanan.
+              </p>
+            </div>
+
+            <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4 sm:px-5">
+              <div className="space-y-3">
+                {courses.map((course) => (
+                  <CourseCard key={course.id} course={course} />
+                ))}
+              </div>
+            </div>
+          </GlassCard>
+        </section>
+
+        <section className="col-span-12 flex min-h-0 flex-col gap-4 xl:col-span-8">
+          <SksCounter totalSks={totalSks} maxSks={maxSks} />
+
+          <div className="min-h-0 flex-1">
+            <ScheduleGrid />
+          </div>
+
+          <GlassCard className="shrink-0 px-5 py-5 sm:px-6">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <div>
+                <p className="text-xs uppercase tracking-[0.35em] text-zinc-500">
+                  Enrollment Action
+                </p>
+                <p className="mt-2 text-sm leading-6 text-zinc-400">
+                  Tombol aktif hanya jika total SKS berada di rentang valid dan
+                  ada mata kuliah yang dipilih.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="rounded-[1.25rem] border border-white/10 bg-white/[0.05] px-4 py-3">
+                  <p className="text-[11px] uppercase tracking-[0.25em] text-zinc-500">
+                    Courses
+                  </p>
+                  <p className="mt-2 text-lg font-semibold text-zinc-100">
+                    {selectedCourses.length}
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  disabled={isConfirmDisabled}
+                  className={[
+                    "rounded-[1.35rem] border px-5 py-4 text-sm font-medium transition",
+                    isConfirmDisabled
+                      ? "cursor-not-allowed border-white/10 bg-white/[0.05] text-zinc-500"
+                      : "border-emerald-300/30 bg-emerald-300/[0.12] text-emerald-100 hover:border-emerald-200/45 hover:bg-emerald-200/[0.16]",
+                  ].join(" ")}
+                >
+                  Confirm Enrollment
+                </button>
+              </div>
+            </div>
+          </GlassCard>
+        </section>
+      </div>
+    </main>
   );
 }

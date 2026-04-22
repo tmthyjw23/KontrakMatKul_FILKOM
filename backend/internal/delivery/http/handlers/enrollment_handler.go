@@ -1,0 +1,86 @@
+package handlers
+
+import (
+	"errors"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
+
+	"sistemkontrakmatkul/backend/internal/domain/models"
+	"sistemkontrakmatkul/backend/internal/domain/services"
+)
+
+type EnrollmentHandler struct {
+	service services.EnrollmentService
+	logger  *zap.Logger
+}
+
+type apiResponse struct {
+	Code    int         `json:"code"`
+	Status  string      `json:"status"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+
+func NewEnrollmentHandler(service services.EnrollmentService, logger *zap.Logger) *EnrollmentHandler {
+	if logger == nil {
+		logger = zap.NewNop()
+	}
+
+	return &EnrollmentHandler{
+		service: service,
+		logger:  logger,
+	}
+}
+
+func (h *EnrollmentHandler) Enroll(ctx *gin.Context) {
+	var request models.EnrollmentRequest
+	if err := ctx.ShouldBindJSON(&request); err != nil {
+		h.logger.Warn("invalid enrollment payload", zap.Error(err))
+		writeJSON(ctx, http.StatusBadRequest, "error", "invalid request payload", nil)
+		return
+	}
+
+	result, err := h.service.Enroll(ctx.Request.Context(), request)
+	if err != nil {
+		switch {
+		case errors.Is(err, models.ErrInvalidEnrollmentRequest),
+			errors.Is(err, models.ErrUserNotFound),
+			errors.Is(err, models.ErrCourseNotFound):
+			h.logger.Warn("enrollment validation failed", zap.Error(err))
+			writeJSON(ctx, http.StatusBadRequest, "error", err.Error(), nil)
+			return
+
+		case errors.Is(err, models.ErrScheduleConflict),
+			errors.Is(err, models.ErrQuotaExceeded),
+			errors.Is(err, models.ErrCreditLimitExceeded),
+			errors.Is(err, models.ErrAlreadyEnrolled):
+			h.logger.Warn("enrollment conflict", zap.Error(err))
+			writeJSON(ctx, http.StatusConflict, "error", err.Error(), nil)
+			return
+
+		default:
+			h.logger.Error("enrollment failed", zap.Error(err))
+			writeJSON(ctx, http.StatusInternalServerError, "error", "internal server error", nil)
+			return
+		}
+	}
+
+	writeJSON(ctx, http.StatusOK, "success", "enrollment saved successfully", result)
+}
+
+func writeJSON(
+	ctx *gin.Context,
+	code int,
+	status string,
+	message string,
+	data interface{},
+) {
+	ctx.JSON(code, apiResponse{
+		Code:    code,
+		Status:  status,
+		Message: message,
+		Data:    data,
+	})
+}

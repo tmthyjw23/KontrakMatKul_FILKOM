@@ -1,0 +1,12 @@
+.git
+.gitignore
+bin
+tmp
+vendor
+node_modules
+*.log
+*.out
+*.test
+coverage
+.env
+.air.toml
