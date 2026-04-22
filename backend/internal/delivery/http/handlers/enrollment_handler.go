@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 
+	"sistemkontrakmatkul/backend/internal/delivery/http/middlewares"
 	"sistemkontrakmatkul/backend/internal/domain/models"
 	"sistemkontrakmatkul/backend/internal/domain/services"
 )
@@ -41,6 +42,22 @@ func (h *EnrollmentHandler) Enroll(ctx *gin.Context) {
 		writeJSON(ctx, http.StatusBadRequest, "error", "invalid request payload", nil)
 		return
 	}
+
+	userIDValue, exists := ctx.Get(middlewares.ContextUserIDKey)
+	if !exists {
+		h.logger.Warn("missing user id in request context")
+		writeJSON(ctx, http.StatusUnauthorized, "error", "unauthorized", nil)
+		return
+	}
+
+	userID, ok := userIDValue.(uint64)
+	if !ok || userID == 0 {
+		h.logger.Warn("invalid user id type in request context")
+		writeJSON(ctx, http.StatusUnauthorized, "error", "unauthorized", nil)
+		return
+	}
+
+	request.UserID = userID
 
 	result, err := h.service.Enroll(ctx.Request.Context(), request)
 	if err != nil {

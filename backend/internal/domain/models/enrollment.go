@@ -16,7 +16,7 @@ var (
 )
 
 type EnrollmentRequest struct {
-	UserID   uint64 `json:"user_id" binding:"required"`
+	UserID   uint64 `json:"-"`
 	CourseID uint64 `json:"course_id" binding:"required"`
 }
 

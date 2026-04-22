@@ -12,7 +12,7 @@ type SksCounterProps = {
 
 export function SksCounter({
   totalSks,
-  maxSks = 24,
+  maxSks = 23,
 }: SksCounterProps) {
   const progress = Math.min((totalSks / maxSks) * 100, 100);
   const animatedValue = useMotionValue(totalSks);
