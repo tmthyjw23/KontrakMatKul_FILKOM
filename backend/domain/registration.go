@@ -1,6 +1,15 @@
 package domain
 
-import "context"
+import (
+	"context"
+	"errors"
+)
+
+// Business Rule Errors
+var (
+	ErrMaxCreditsExceeded = errors.New("Cannot register: Exceeds maximum limit of 24 SKS")
+	ErrScheduleConflict   = errors.New("Schedule conflict detected")
+)
 
 // Registration represents a student's course registration record.
 type Registration struct {

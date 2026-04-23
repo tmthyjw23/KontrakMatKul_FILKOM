@@ -27,6 +27,7 @@ type Schedule struct {
 type CourseRepository interface {
 	FetchAll(ctx context.Context) ([]Course, error)
 	GetByCode(ctx context.Context, code string) (*Course, error)
+	GetSchedulesByCourseCode(ctx context.Context, code string) ([]Schedule, error)
 	Create(ctx context.Context, course *Course) error
 	Delete(ctx context.Context, code string) error
 }

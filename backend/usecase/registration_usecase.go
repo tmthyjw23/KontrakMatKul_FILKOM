@@ -3,6 +3,7 @@ package usecase
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"kontrak-matkul/domain"
 )
@@ -23,6 +24,30 @@ func NewRegistrationUsecase(rr domain.RegistrationRepository, cr domain.CourseRe
 	}
 }
 
+// isTimeOverlap checks if two time ranges (HH:MM) overlap.
+func isTimeOverlap(startA, endA, startB, endB string) (bool, error) {
+	layout := "15:04" // Standard format for HH:MM in Go
+	tSA, err := time.Parse(layout, startA)
+	if err != nil {
+		return false, fmt.Errorf("invalid time format startA: %w", err)
+	}
+	tEA, err := time.Parse(layout, endA)
+	if err != nil {
+		return false, fmt.Errorf("invalid time format endA: %w", err)
+	}
+	tSB, err := time.Parse(layout, startB)
+	if err != nil {
+		return false, fmt.Errorf("invalid time format startB: %w", err)
+	}
+	tEB, err := time.Parse(layout, endB)
+	if err != nil {
+		return false, fmt.Errorf("invalid time format endB: %w", err)
+	}
+
+	// Overlap condition: StartA < EndB && EndA > StartB
+	return tSA.Before(tEB) && tEA.After(tSB), nil
+}
+
 // RegisterCourse validates and creates a new registration entry.
 func (u *registrationUsecase) RegisterCourse(ctx context.Context, nim, courseCode string) (*domain.Registration, error) {
 	if nim == "" {
@@ -32,22 +57,72 @@ func (u *registrationUsecase) RegisterCourse(ctx context.Context, nim, courseCod
 		return nil, fmt.Errorf("course code cannot be empty")
 	}
 
-	// Business Rule: Ensure the course exists before registering
-	if _, err := u.courseRepo.GetByCode(ctx, courseCode); err != nil {
+	// 1. Ensure the new course exists
+	newCourse, err := u.courseRepo.GetByCode(ctx, courseCode)
+	if err != nil {
 		return nil, fmt.Errorf("RegisterCourse: course not found: %w", err)
 	}
 
-	// Business Rule: Prevent duplicate registrations
-	existing, err := u.regRepo.GetByNIM(ctx, nim)
+	// 2. Fetch existing active registrations
+	existingRegs, err := u.regRepo.GetByNIM(ctx, nim)
 	if err != nil {
 		return nil, fmt.Errorf("RegisterCourse: error checking existing registrations: %w", err)
 	}
-	for _, r := range existing {
-		if r.CourseCode == courseCode && r.Status == "registered" {
-			return nil, fmt.Errorf("RegisterCourse: student %s is already registered for course %s", nim, courseCode)
+
+	totalCredits := newCourse.Credits
+	var activeCourseCodes []string
+
+	for _, r := range existingRegs {
+		if r.Status == "registered" {
+			if r.CourseCode == courseCode {
+				return nil, fmt.Errorf("RegisterCourse: student %s is already registered for course %s", nim, courseCode)
+			}
+
+			// Accumulate credits for existing active courses
+			c, err := u.courseRepo.GetByCode(ctx, r.CourseCode)
+			if err != nil {
+				return nil, fmt.Errorf("RegisterCourse: error fetching existing course details for calculating SKS: %w", err)
+			}
+			totalCredits += c.Credits
+			activeCourseCodes = append(activeCourseCodes, r.CourseCode)
 		}
 	}
 
+	// 3. Business Rule: Max SKS Limit
+	if totalCredits > 24 {
+		return nil, domain.ErrMaxCreditsExceeded
+	}
+
+	// 4. Business Rule: Schedule Clash Detection
+	newSchedules, err := u.courseRepo.GetSchedulesByCourseCode(ctx, courseCode)
+	if err != nil {
+		return nil, fmt.Errorf("RegisterCourse: error fetching new course schedules: %w", err)
+	}
+
+	for _, activeCode := range activeCourseCodes {
+		existSchedules, err := u.courseRepo.GetSchedulesByCourseCode(ctx, activeCode)
+		if err != nil {
+			return nil, fmt.Errorf("RegisterCourse: error fetching active course schedules: %w", err)
+		}
+
+		for _, nSched := range newSchedules {
+			for _, eSched := range existSchedules {
+				// We only care if they are on the same day
+				if nSched.DayOfWeek == eSched.DayOfWeek {
+					overlap, err := isTimeOverlap(nSched.StartTime, nSched.EndTime, eSched.StartTime, eSched.EndTime)
+					if err != nil {
+						return nil, fmt.Errorf("RegisterCourse: error parsing schedule times: %w", err)
+					}
+					if overlap {
+						return nil, fmt.Errorf("%w: conflict with course %s on %s (%s-%s)", 
+							domain.ErrScheduleConflict, activeCode, nSched.DayOfWeek, eSched.StartTime, eSched.EndTime)
+					}
+				}
+			}
+		}
+	}
+
+	// Validation passed, create registration
 	reg := &domain.Registration{
 		StudentNIM: nim,
 		CourseCode: courseCode,

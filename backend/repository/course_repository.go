@@ -84,6 +84,47 @@ func (r *courseRepository) GetByCode(ctx context.Context, code string) (*domain.
 	return &c, nil
 }
 
+// GetSchedulesByCourseCode retrieves the schedules associated with a specific course.
+func (r *courseRepository) GetSchedulesByCourseCode(ctx context.Context, code string) ([]domain.Schedule, error) {
+	query := `
+		SELECT course_code, day_of_week, start_time, end_time, room, additional_notes
+		FROM schedules
+		WHERE course_code = ?
+	`
+
+	rows, err := r.db.QueryContext(ctx, query, code)
+	if err != nil {
+		return nil, fmt.Errorf("error fetching schedules for course %s: %w", code, err)
+	}
+	defer rows.Close()
+
+	var schedules []domain.Schedule
+	for rows.Next() {
+		var s domain.Schedule
+		var notes sql.NullString
+		if err := rows.Scan(
+			&s.CourseCode,
+			&s.DayOfWeek,
+			&s.StartTime,
+			&s.EndTime,
+			&s.Room,
+			&notes,
+		); err != nil {
+			return nil, fmt.Errorf("error scanning schedule row: %w", err)
+		}
+		if notes.Valid {
+			s.AdditionalNotes = notes.String
+		}
+		schedules = append(schedules, s)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error for schedules: %w", err)
+	}
+
+	return schedules, nil
+}
+
 // Create inserts a new course record into the database.
 func (r *courseRepository) Create(ctx context.Context, course *domain.Course) error {
 	query := `

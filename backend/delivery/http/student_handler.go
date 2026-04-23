@@ -2,6 +2,7 @@ package http
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -100,6 +101,14 @@ func (h *StudentHandler) RegisterCourseHandler(w http.ResponseWriter, r *http.Re
 
 	registration, err := h.RegistrationUsecase.RegisterCourse(r.Context(), body.NIM, body.CourseCode)
 	if err != nil {
+		if errors.Is(err, domain.ErrMaxCreditsExceeded) {
+			writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
+			return
+		}
+		if errors.Is(err, domain.ErrScheduleConflict) {
+			writeJSON(w, http.StatusConflict, map[string]string{"error": err.Error()})
+			return
+		}
 		writeJSON(w, http.StatusUnprocessableEntity, map[string]string{"error": err.Error()})
 		return
 	}
