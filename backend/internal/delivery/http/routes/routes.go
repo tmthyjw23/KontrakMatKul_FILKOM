@@ -15,6 +15,8 @@ func SetupRoutes(
 	enrollmentHandler *handlers.EnrollmentHandler,
 	authHandler *handlers.AuthHandler,
 	periodHandler *handlers.PeriodHandler,
+	dashboardHandler *handlers.StudentDashboardHandler,
+	prereqHandler *handlers.CoursePrerequisiteHandler,
 	jwtMiddleware gin.HandlerFunc,
 ) {
 	router.GET("/health", func(ctx *gin.Context) {
@@ -38,12 +40,16 @@ func SetupRoutes(
 		// Student/User routes
 		apiV1.GET("/period/status", jwtMiddleware, periodHandler.GetStatus)
 		apiV1.POST("/enrollments", jwtMiddleware, enrollmentHandler.Enroll)
+		apiV1.GET("/dashboard/schedule", jwtMiddleware, dashboardHandler.GetSchedule)
+		apiV1.GET("/dashboard/history", jwtMiddleware, dashboardHandler.GetHistory)
 
 		// Admin routes
 		adminGroup := apiV1.Group("/admin")
 		adminGroup.Use(jwtMiddleware, middlewares.RoleAuth("ADMIN"))
 		{
 			adminGroup.PUT("/period", periodHandler.UpdateStatus)
+			adminGroup.POST("/prerequisites", prereqHandler.Add)
+			adminGroup.DELETE("/prerequisites", prereqHandler.Remove)
 		}
 
 		apiV1.OPTIONS("/enrollments", func(ctx *gin.Context) {

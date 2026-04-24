@@ -3,7 +3,6 @@ package repositories
 import (
 	"context"
 	"database/sql"
-
 	"sistemkontrakmatkul/backend/internal/domain/models"
 )
 
@@ -17,4 +16,5 @@ type EnrollmentRepository interface {
 	CountCurrentEnrollmentsByCourseID(ctx context.Context, tx *sql.Tx, courseID uint64) (int, error)
 	HasEnrollment(ctx context.Context, tx *sql.Tx, userID uint64, courseID uint64) (bool, error)
 	CreateEnrollment(ctx context.Context, tx *sql.Tx, enrollment models.Enrollment) (*models.Enrollment, error)
+	GetStudentSchedule(ctx context.Context, userID uint64) ([]models.StudentScheduleResponse, error)
 }

@@ -16,14 +16,18 @@ import (
 )
 
 type EnrollmentUsecase struct {
-	repo   repositories.EnrollmentRepository
-	logger *zap.Logger
+	repo         repositories.EnrollmentRepository
+	passedRepo   repositories.PassedCourseRepository
+	prereqRepo   repositories.CoursePrerequisiteRepository
+	logger       *zap.Logger
 }
 
 var _ services.EnrollmentService = (*EnrollmentUsecase)(nil)
 
 func NewEnrollmentUsecase(
 	repo repositories.EnrollmentRepository,
+	passedRepo repositories.PassedCourseRepository,
+	prereqRepo repositories.CoursePrerequisiteRepository,
 	logger *zap.Logger,
 ) *EnrollmentUsecase {
 	if logger == nil {
@@ -31,8 +35,10 @@ func NewEnrollmentUsecase(
 	}
 
 	return &EnrollmentUsecase{
-		repo:   repo,
-		logger: logger,
+		repo:       repo,
+		passedRepo: passedRepo,
+		prereqRepo: prereqRepo,
+		logger:     logger,
 	}
 }
 
@@ -68,6 +74,30 @@ func (u *EnrollmentUsecase) Enroll(
 	course, err := u.repo.GetCourseByID(ctx, tx, request.CourseID)
 	if err != nil {
 		return nil, err
+	}
+
+	// 1. Check Prerequisites
+	prereqs, err := u.prereqRepo.GetPrerequisitesForCourse(ctx, request.CourseID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to check prerequisites: %w", err)
+	}
+
+	if len(prereqs) > 0 {
+		passedCourses, err := u.passedRepo.GetByUserID(ctx, request.UserID)
+		if err != nil {
+			return nil, fmt.Errorf("failed to fetch passed courses: %w", err)
+		}
+
+		passedMap := make(map[uint64]bool)
+		for _, pc := range passedCourses {
+			passedMap[pc.CourseID] = true
+		}
+
+		for _, prereqID := range prereqs {
+			if !passedMap[prereqID] {
+				return nil, models.ErrPrerequisiteNotMet
+			}
+		}
 	}
 
 	alreadyEnrolled, err := u.repo.HasEnrollment(ctx, tx, request.UserID, request.CourseID)
@@ -182,18 +212,6 @@ func hasScheduleConflict(
 				return true
 			}
 
-			// Overlap logic:
-			// A schedule conflicts when it starts before the other one ends,
-			// and it ends after the other one starts.
-			//
-			// (startA < endB) AND (endA > startB)
-			//
-			// Example:
-			// Existing 10:10-11:30
-			// New      11:00-12:00
-			// 10:10 < 12:00  -> true
-			// 11:30 > 11:00  -> true
-			// Both true, so they overlap.
 			if candidateStart.Before(existingEnd) && candidateEnd.After(existingStart) {
 				return true
 			}

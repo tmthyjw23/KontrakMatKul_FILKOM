@@ -54,8 +54,11 @@ func main() {
 	courseUsecase := usecase.NewCourseUsecase(courseRepository, logger)
 	courseHandler := handlers.NewCourseHandler(courseUsecase, logger)
 
+	passedCourseRepository := mysql.NewPassedCourseRepository(db)
+	prereqRepository := mysql.NewCoursePrerequisiteRepository(db)
+
 	enrollmentRepository := mysql.NewEnrollmentRepository(db, logger)
-	enrollmentUsecase := usecase.NewEnrollmentUsecase(enrollmentRepository, logger)
+	enrollmentUsecase := usecase.NewEnrollmentUsecase(enrollmentRepository, passedCourseRepository, prereqRepository, logger)
 	enrollmentHandler := handlers.NewEnrollmentHandler(enrollmentUsecase, logger)
 
 	userRepository := mysql.NewUserRepository(db, logger)
@@ -65,6 +68,12 @@ func main() {
 	settingRepository := mysql.NewSystemSettingsRepository(db, logger)
 	periodUsecase := usecase.NewPeriodUsecase(settingRepository, logger)
 	periodHandler := handlers.NewPeriodHandler(periodUsecase)
+
+	dashboardUsecase := usecase.NewStudentDashboardUsecase(enrollmentRepository, courseRepository, passedCourseRepository)
+	dashboardHandler := handlers.NewStudentDashboardHandler(dashboardUsecase)
+
+	prereqUsecase := usecase.NewCoursePrerequisiteUsecase(prereqRepository)
+	prereqHandler := handlers.NewCoursePrerequisiteHandler(prereqUsecase)
 
 	jwtMiddleware := middlewares.JWT(cfg.JWTSecret, logger)
 
@@ -81,6 +90,8 @@ func main() {
 		enrollmentHandler,
 		authHandler,
 		periodHandler,
+		dashboardHandler,
+		prereqHandler,
 		jwtMiddleware,
 	)
 
