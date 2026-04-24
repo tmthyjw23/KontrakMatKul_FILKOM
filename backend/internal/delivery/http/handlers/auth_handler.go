@@ -3,9 +3,10 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"sistemkontrakmatkul/backend/internal/domain/models"
 	"sistemkontrakmatkul/backend/internal/usecase"
+
+	"github.com/gin-gonic/gin"
 )
 
 type AuthHandler struct {
@@ -24,7 +25,7 @@ func (h *AuthHandler) Login(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
 			"status":  "error",
-			"message": "invalid request payload",
+			"message": "invalid request payload: " + err.Error(),
 			"data":    nil,
 		})
 		return

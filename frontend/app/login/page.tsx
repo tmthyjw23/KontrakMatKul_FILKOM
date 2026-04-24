@@ -160,11 +160,12 @@ export default function LoginPage() {
             <div className="mt-3 space-y-2 text-xs text-zinc-400">
               <div>
                 <p className="font-medium text-zinc-300">Student</p>
-                <p>Number: 22010001</p>
-                <p>Password: password123</p>
+                <p>Number: S1001</p>
+                <p>Password: pass123</p>
               </div>
               <div className="border-t border-white/10 pt-2">
                 <p className="font-medium text-zinc-300">Admin</p>
+                <p>Number: ADMIN001</p>
                 <p>Password: admin123</p>
               </div>
             </div>

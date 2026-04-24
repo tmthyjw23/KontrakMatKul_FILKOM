@@ -63,3 +63,25 @@ func (r *coursePrerequisiteRepository) GetPrerequisitesForCourse(ctx context.Con
 	}
 	return ids, nil
 }
+
+func (r *coursePrerequisiteRepository) CheckPrerequisitesMet(ctx context.Context, userID uint64, courseID uint64) (bool, error) {
+	query := `
+		SELECT COUNT(*) 
+		FROM course_prerequisites cp
+		JOIN passed_courses pc ON cp.prerequisite_course_id = pc.course_id
+		WHERE cp.course_id = ? AND pc.user_id = ?`
+
+	var passedCount int
+	err := r.db.QueryRowContext(ctx, query, courseID, userID).Scan(&passedCount)
+	if err != nil {
+		return false, err
+	}
+
+	var totalPrereqs int
+	err = r.db.QueryRowContext(ctx, `SELECT COUNT(*) FROM course_prerequisites WHERE course_id = ?`, courseID).Scan(&totalPrereqs)
+	if err != nil {
+		return false, err
+	}
+
+	return passedCount == totalPrereqs, nil
+}

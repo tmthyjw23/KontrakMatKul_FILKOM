@@ -3,6 +3,8 @@ package mysql
 import (
 	"context"
 	"database/sql"
+	"fmt"
+	"strings"
 	"sistemkontrakmatkul/backend/internal/domain/models"
 )
 
@@ -60,4 +62,31 @@ func (r *passedCourseRepository) GetPassedCourseDetailsByUserID(ctx context.Cont
 		results = append(results, res)
 	}
 	return results, nil
+}
+
+func (r *passedCourseRepository) HasPassedCourses(ctx context.Context, userID uint64, courseIDs []uint64) (bool, error) {
+	if len(courseIDs) == 0 {
+		return true, nil
+	}
+
+	// Create placeholders for the IN clause: ?, ?, ?
+	placeholders := make([]string, len(courseIDs))
+	args := make([]interface{}, 0, len(courseIDs)+1)
+	args = append(args, userID)
+
+	for i, id := range courseIDs {
+		placeholders[i] = "?"
+		args = append(args, id)
+	}
+
+	query := fmt.Sprintf(`SELECT COUNT(*) FROM passed_courses WHERE user_id = ? AND course_id IN (%s)`, 
+		strings.Join(placeholders, ","))
+
+	var count int
+	err := r.db.QueryRowContext(ctx, query, args...).Scan(&count)
+	if err != nil {
+		return false, err
+	}
+
+	return count == len(courseIDs), nil
 }

@@ -83,20 +83,12 @@ func (u *EnrollmentUsecase) Enroll(
 	}
 
 	if len(prereqs) > 0 {
-		passedCourses, err := u.passedRepo.GetByUserID(ctx, request.UserID)
+		hasAllPassed, err := u.passedRepo.HasPassedCourses(ctx, request.UserID, prereqs)
 		if err != nil {
-			return nil, fmt.Errorf("failed to fetch passed courses: %w", err)
+			return nil, fmt.Errorf("failed to check passed courses: %w", err)
 		}
-
-		passedMap := make(map[uint64]bool)
-		for _, pc := range passedCourses {
-			passedMap[pc.CourseID] = true
-		}
-
-		for _, prereqID := range prereqs {
-			if !passedMap[prereqID] {
-				return nil, models.ErrPrerequisiteNotMet
-			}
+		if !hasAllPassed {
+			return nil, models.ErrPrerequisiteNotMet
 		}
 	}
 
