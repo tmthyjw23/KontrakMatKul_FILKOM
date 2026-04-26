@@ -19,6 +19,8 @@ func SetupRoutes(
 	prereqHandler *handlers.CoursePrerequisiteHandler,
 	jwtMiddleware gin.HandlerFunc,
 ) {
+	router.Use(middlewares.CORS())
+
 	router.GET("/health", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{
 			"code":    http.StatusOK,
@@ -31,7 +33,6 @@ func SetupRoutes(
 	})
 
 	apiV1 := router.Group("/api/v1")
-	apiV1.Use(middlewares.CORS())
 	{
 		// Public routes
 		apiV1.POST("/login", authHandler.Login)
