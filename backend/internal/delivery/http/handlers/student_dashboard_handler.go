@@ -2,9 +2,9 @@ package handlers
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"sistemkontrakmatkul/backend/internal/delivery/http/middlewares"
 	"sistemkontrakmatkul/backend/internal/usecase"
 )
 
@@ -17,9 +17,18 @@ func NewStudentDashboardHandler(uc usecase.StudentDashboardUsecase) *StudentDash
 }
 
 func (h *StudentDashboardHandler) GetSchedule(c *gin.Context) {
-	userID, _ := c.Get("userId") // Assuming JWT middleware sets this
-	uID, _ := strconv.ParseUint(userID.(string), 10, 64)
-	
+	userIDValue, exists := c.Get(middlewares.ContextUserIDKey)
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "unauthorized: user id not found in context"})
+		return
+	}
+
+	uID, ok := userIDValue.(uint64)
+	if !ok {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "internal server error: invalid user id type"})
+		return
+	}
+
 	schedule, err := h.usecase.GetMySchedule(c.Request.Context(), uID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -29,9 +38,18 @@ func (h *StudentDashboardHandler) GetSchedule(c *gin.Context) {
 }
 
 func (h *StudentDashboardHandler) GetHistory(c *gin.Context) {
-	userID, _ := c.Get("userId")
-	uID, _ := strconv.ParseUint(userID.(string), 10, 64)
-	
+	userIDValue, exists := c.Get(middlewares.ContextUserIDKey)
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "unauthorized: user id not found in context"})
+		return
+	}
+
+	uID, ok := userIDValue.(uint64)
+	if !ok {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "internal server error: invalid user id type"})
+		return
+	}
+
 	history, err := h.usecase.GetMyHistory(c.Request.Context(), uID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})

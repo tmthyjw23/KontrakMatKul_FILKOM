@@ -48,9 +48,27 @@ func SetupRoutes(
 		adminGroup := apiV1.Group("/admin")
 		adminGroup.Use(jwtMiddleware, middlewares.RoleAuth("ADMIN"))
 		{
-			adminGroup.PUT("/period", periodHandler.UpdateStatus)
+			// Period Management
+			adminGroup.GET("/contract-period", periodHandler.GetStatus)
+			adminGroup.PUT("/contract-period", periodHandler.UpdateStatus)
+
+			// Course Management
+			adminGroup.GET("/courses", courseHandler.ListCourses)
+			adminGroup.POST("/courses", courseHandler.Create)
+			adminGroup.PUT("/courses/:id", courseHandler.Update)
+			adminGroup.DELETE("/courses/:id", courseHandler.Delete)
+
+			// Prereq Management
 			adminGroup.POST("/prerequisites", prereqHandler.Add)
 			adminGroup.DELETE("/prerequisites", prereqHandler.Remove)
+
+			// Enrollment Monitoring
+			// adminGroup.GET("/enrollments", enrollmentHandler.ListAll) // To be implemented
+			// adminGroup.POST("/enrollments/:id/approve", enrollmentHandler.Approve) // To be implemented
+			// adminGroup.POST("/enrollments/:id/reject", enrollmentHandler.Reject) // To be implemented
+
+			// User Management
+			// adminGroup.GET("/students", courseHandler.ListCourses) // Temporary placeholder
 		}
 
 		apiV1.OPTIONS("/enrollments", func(ctx *gin.Context) {

@@ -23,8 +23,8 @@ export default function LoginPage() {
   function validateForm(): boolean {
     const newErrors: Record<string, string> = {};
 
-    if (role === "student" && !formData.student_number.trim()) {
-      newErrors.student_number = "Student number is required";
+    if (!formData.student_number.trim()) {
+      newErrors.student_number = "Student number/Username is required";
     }
     if (!formData.password.trim()) {
       newErrors.password = "Password is required";
@@ -45,7 +45,7 @@ export default function LoginPage() {
 
     try {
       const response = await authApi.login({
-        student_number: role === "student" ? formData.student_number : "admin",
+        student_number: formData.student_number,
         password: formData.password,
         role,
       });
@@ -111,19 +111,17 @@ export default function LoginPage() {
 
           {/* Form */}
           <form onSubmit={handleLogin} className="space-y-4">
-            {role === "student" && (
-              <Input
-                type="text"
-                label="Student Number"
-                placeholder="e.g., 22010001"
-                value={formData.student_number}
-                onChange={(e) =>
-                  setFormData({ ...formData, student_number: e.target.value })
-                }
-                error={errors.student_number}
-                disabled={isLoading}
-              />
-            )}
+            <Input
+              type="text"
+              label={role === "student" ? "Student Number" : "Admin Username"}
+              placeholder={role === "student" ? "e.g., 22010001" : "e.g., ADMIN001"}
+              value={formData.student_number}
+              onChange={(e) =>
+                setFormData({ ...formData, student_number: e.target.value })
+              }
+              error={errors.student_number}
+              disabled={isLoading}
+            />
 
             <Input
               type="password"

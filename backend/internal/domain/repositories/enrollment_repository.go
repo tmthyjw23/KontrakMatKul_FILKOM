@@ -17,4 +17,6 @@ type EnrollmentRepository interface {
 	HasEnrollment(ctx context.Context, tx *sql.Tx, userID uint64, courseID uint64) (bool, error)
 	CreateEnrollment(ctx context.Context, tx *sql.Tx, enrollment models.Enrollment) (*models.Enrollment, error)
 	GetStudentSchedule(ctx context.Context, userID uint64) ([]models.StudentScheduleResponse, error)
+	ListAllEnrollments(ctx context.Context) ([]models.Enrollment, error)
+	UpdateStatus(ctx context.Context, enrollmentID uint64, status string) error
 }

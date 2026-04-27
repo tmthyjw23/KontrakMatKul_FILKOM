@@ -16,6 +16,7 @@ interface CourseFormData {
   code: string;
   name: string;
   sks: string;
+  quota: string;
   lecturer: string;
 }
 
@@ -30,6 +31,7 @@ function CoursesContent() {
     code: "",
     name: "",
     sks: "",
+    quota: "",
     lecturer: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -52,7 +54,7 @@ function CoursesContent() {
 
   function openCreateModal() {
     setSelectedCourse(null);
-    setFormData({ code: "", name: "", sks: "", lecturer: "" });
+    setFormData({ code: "", name: "", sks: "", quota: "", lecturer: "" });
     setErrors({});
     setIsModalOpen(true);
   }
@@ -63,6 +65,7 @@ function CoursesContent() {
       code: course.code,
       name: course.name,
       sks: String(course.sks),
+      quota: String(course.quota),
       lecturer: course.lecturer,
     });
     setErrors({});
@@ -74,8 +77,16 @@ function CoursesContent() {
 
     if (!formData.code.trim()) newErrors.code = "Course code is required";
     if (!formData.name.trim()) newErrors.name = "Course name is required";
-    if (!formData.sks.trim()) newErrors.sks = "SKS is required";
-    if (isNaN(Number(formData.sks))) newErrors.sks = "SKS must be a number";
+    if (!formData.sks.trim()) {
+      newErrors.sks = "SKS is required";
+    } else if (isNaN(Number(formData.sks))) {
+      newErrors.sks = "SKS must be a number";
+    }
+    if (!formData.quota.trim()) {
+      newErrors.quota = "Quota is required";
+    } else if (isNaN(Number(formData.quota))) {
+      newErrors.quota = "Quota must be a number";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -90,6 +101,7 @@ function CoursesContent() {
         code: formData.code,
         name: formData.name,
         sks: Number(formData.sks),
+        quota: Number(formData.quota),
         lecturer: formData.lecturer,
       };
 
@@ -252,6 +264,16 @@ function CoursesContent() {
             value={formData.sks}
             onChange={(e) => setFormData({ ...formData, sks: e.target.value })}
             error={errors.sks}
+            disabled={isSaving}
+          />
+
+          <Input
+            label="Quota"
+            type="number"
+            placeholder="e.g., 40"
+            value={formData.quota}
+            onChange={(e) => setFormData({ ...formData, quota: e.target.value })}
+            error={errors.quota}
             disabled={isSaving}
           />
 

@@ -3,6 +3,7 @@ package handlers
 import (
 	"errors"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -85,6 +86,51 @@ func (h *EnrollmentHandler) Enroll(ctx *gin.Context) {
 	}
 
 	writeJSON(ctx, http.StatusOK, "success", "enrollment saved successfully", result)
+}
+
+func (h *EnrollmentHandler) ListAll(ctx *gin.Context) {
+	enrollments, err := h.service.ListAll(ctx.Request.Context())
+	if err != nil {
+		h.logger.Error("failed to handle list all enrollments", zap.Error(err))
+		writeJSON(ctx, http.StatusInternalServerError, "error", "failed to fetch enrollments", nil)
+		return
+	}
+
+	writeJSON(ctx, http.StatusOK, "success", "enrollments fetched successfully", enrollments)
+}
+
+func (h *EnrollmentHandler) Approve(ctx *gin.Context) {
+	idStr := ctx.Param("id")
+	id, err := strconv.ParseUint(idStr, 10, 64)
+	if err != nil {
+		writeJSON(ctx, http.StatusBadRequest, "error", "invalid enrollment id", nil)
+		return
+	}
+
+	if err := h.service.Approve(ctx.Request.Context(), id); err != nil {
+		h.logger.Error("failed to approve enrollment", zap.Uint64("id", id), zap.Error(err))
+		writeJSON(ctx, http.StatusInternalServerError, "error", "failed to approve enrollment", nil)
+		return
+	}
+
+	writeJSON(ctx, http.StatusOK, "success", "enrollment approved successfully", nil)
+}
+
+func (h *EnrollmentHandler) Reject(ctx *gin.Context) {
+	idStr := ctx.Param("id")
+	id, err := strconv.ParseUint(idStr, 10, 64)
+	if err != nil {
+		writeJSON(ctx, http.StatusBadRequest, "error", "invalid enrollment id", nil)
+		return
+	}
+
+	if err := h.service.Reject(ctx.Request.Context(), id); err != nil {
+		h.logger.Error("failed to reject enrollment", zap.Uint64("id", id), zap.Error(err))
+		writeJSON(ctx, http.StatusInternalServerError, "error", "failed to reject enrollment", nil)
+		return
+	}
+
+	writeJSON(ctx, http.StatusOK, "success", "enrollment rejected successfully", nil)
 }
 
 func writeJSON(

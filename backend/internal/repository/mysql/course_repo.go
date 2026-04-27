@@ -123,3 +123,50 @@ func (r *CourseRepository) ListCourses(ctx context.Context) ([]models.CourseResp
 
 	return courses, nil
 }
+
+func (r *CourseRepository) Create(ctx context.Context, course *models.Course) error {
+	const query = `
+		INSERT INTO courses (code, name, sks, quota, lecturer)
+		VALUES (?, ?, ?, ?, ?)
+	`
+	result, err := r.db.ExecContext(ctx, query, course.Code, course.Name, course.SKS, course.Quota, course.Lecturer)
+	if err != nil {
+		r.logger.Error("failed to create course", zap.Error(err))
+		return err
+	}
+
+	id, err := result.LastInsertId()
+	if err != nil {
+		r.logger.Error("failed to retrieve insert id", zap.Error(err))
+		return err
+	}
+	course.ID = uint64(id)
+
+	return nil
+}
+
+func (r *CourseRepository) Update(ctx context.Context, course *models.Course) error {
+	const query = `
+		UPDATE courses 
+		SET code = ?, name = ?, sks = ?, quota = ?, lecturer = ?
+		WHERE id = ?
+	`
+	_, err := r.db.ExecContext(ctx, query, course.Code, course.Name, course.SKS, course.Quota, course.Lecturer, course.ID)
+	if err != nil {
+		r.logger.Error("failed to update course", zap.Uint64("course_id", course.ID), zap.Error(err))
+		return err
+	}
+
+	return nil
+}
+
+func (r *CourseRepository) Delete(ctx context.Context, id uint64) error {
+	const query = `DELETE FROM courses WHERE id = ?`
+	_, err := r.db.ExecContext(ctx, query, id)
+	if err != nil {
+		r.logger.Error("failed to delete course", zap.Uint64("course_id", id), zap.Error(err))
+		return err
+	}
+
+	return nil
+}

@@ -38,14 +38,6 @@ type UserCreditInfo struct {
 	MaxSKS int
 }
 
-type Course struct {
-	ID    uint64 `json:"id"`
-	Code  string `json:"code"`
-	Name  string `json:"name"`
-	SKS   int    `json:"sks"`
-	Quota int    `json:"quota"`
-}
-
 type ScheduleSlot struct {
 	CourseID   uint64 `json:"course_id"`
 	CourseCode string `json:"course_code"`

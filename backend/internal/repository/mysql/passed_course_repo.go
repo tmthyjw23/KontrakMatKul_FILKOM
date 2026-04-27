@@ -53,7 +53,7 @@ func (r *passedCourseRepository) GetPassedCourseDetailsByUserID(ctx context.Cont
 	}
 	defer rows.Close()
 
-	var results []models.PassedCourseResponse
+	results := make([]models.PassedCourseResponse, 0)
 	for rows.Next() {
 		var res models.PassedCourseResponse
 		if err := rows.Scan(&res.CourseCode, &res.CourseName, &res.Grade); err != nil {

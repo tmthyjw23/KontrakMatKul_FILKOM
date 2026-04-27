@@ -28,8 +28,11 @@ export function ProtectedRoute({
       return;
     }
 
-    if (requiredRole && user?.role !== requiredRole) {
-      router.replace(requiredRole === "admin" ? "/admin" : "/student");
+    const userRole = user?.role?.toLowerCase();
+    const requiredRoleLower = requiredRole?.toLowerCase();
+
+    if (requiredRole && userRole !== requiredRoleLower) {
+      router.replace(requiredRoleLower === "admin" ? "/admin" : "/student");
     }
   }, [isAuthenticated, user, requiredRole, router]);
 
@@ -44,7 +47,10 @@ export function ProtectedRoute({
     );
   }
 
-  if (requiredRole && user?.role !== requiredRole) {
+  const userRole = user?.role?.toLowerCase();
+  const requiredRoleLower = requiredRole?.toLowerCase();
+
+  if (requiredRole && userRole !== requiredRoleLower) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="space-y-4 text-center">

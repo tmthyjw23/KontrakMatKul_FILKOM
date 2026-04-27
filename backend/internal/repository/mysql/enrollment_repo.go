@@ -295,3 +295,35 @@ func (r *EnrollmentRepository) scanSchedules(
 func (r *EnrollmentRepository) String() string {
 	return fmt.Sprintf("EnrollmentRepository{db:%t}", r.db != nil)
 }
+
+func (r *EnrollmentRepository) ListAllEnrollments(ctx context.Context) ([]models.Enrollment, error) {
+	const query = `SELECT id, user_id, course_id, enrolled_at, created_at, updated_at FROM enrollments`
+	rows, err := r.db.QueryContext(ctx, query)
+	if err != nil {
+		r.logger.Error("failed to list all enrollments", zap.Error(err))
+		return nil, err
+	}
+	defer rows.Close()
+
+	results := make([]models.Enrollment, 0)
+	for rows.Next() {
+		var e models.Enrollment
+		if err := rows.Scan(&e.ID, &e.UserID, &e.CourseID, &e.EnrolledAt, &e.CreatedAt, &e.UpdatedAt); err != nil {
+			r.logger.Error("failed to scan enrollment row", zap.Error(err))
+			return nil, err
+		}
+		results = append(results, e)
+	}
+
+	return results, nil
+}
+
+func (r *EnrollmentRepository) UpdateStatus(ctx context.Context, enrollmentID uint64, status string) error {
+	const query = `UPDATE enrollments SET status = ? WHERE id = ?`
+	_, err := r.db.ExecContext(ctx, query, status, enrollmentID)
+	if err != nil {
+		r.logger.Error("failed to update enrollment status", zap.Uint64("enrollment_id", enrollmentID), zap.Error(err))
+		return err
+	}
+	return nil
+}

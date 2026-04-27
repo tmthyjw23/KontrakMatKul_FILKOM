@@ -174,6 +174,18 @@ func (u *EnrollmentUsecase) Enroll(
 	}, nil
 }
 
+func (u *EnrollmentUsecase) ListAll(ctx context.Context) ([]models.Enrollment, error) {
+	return u.repo.ListAllEnrollments(ctx)
+}
+
+func (u *EnrollmentUsecase) Approve(ctx context.Context, enrollmentID uint64) error {
+	return u.repo.UpdateStatus(ctx, enrollmentID, "APPROVED")
+}
+
+func (u *EnrollmentUsecase) Reject(ctx context.Context, enrollmentID uint64) error {
+	return u.repo.UpdateStatus(ctx, enrollmentID, "REJECTED")
+}
+
 func hasScheduleConflict(
 	currentSchedules []models.ScheduleSlot,
 	newSchedules []models.ScheduleSlot,
