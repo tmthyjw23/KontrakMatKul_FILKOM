@@ -149,25 +149,6 @@ export default function LoginPage() {
               {isLoading ? "Logging in..." : "Login"}
             </button>
           </form>
-
-          {/* Demo Credentials */}
-          <div className="mt-8 rounded-lg border border-white/10 bg-white/[0.02] p-4">
-            <p className="text-xs font-medium text-zinc-400 uppercase tracking-widest">
-              Demo Credentials
-            </p>
-            <div className="mt-3 space-y-2 text-xs text-zinc-400">
-              <div>
-                <p className="font-medium text-zinc-300">Student</p>
-                <p>Number: S1001</p>
-                <p>Password: pass123</p>
-              </div>
-              <div className="border-t border-white/10 pt-2">
-                <p className="font-medium text-zinc-300">Admin</p>
-                <p>Number: ADMIN001</p>
-                <p>Password: admin123</p>
-              </div>
-            </div>
-          </div>
         </div>
       </motion.div>
     </main>
