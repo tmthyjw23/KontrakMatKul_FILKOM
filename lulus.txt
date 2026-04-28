@@ -1,0 +1,138 @@
+========================================
+MATA KULIAH YANG SUDAH DIAMBIL (LULUS)
+========================================
+
+PRA-SEMESTER
+------------
+1. Keterampilan Komputer Dasar
+2. Pendidikan Keterampilan
+
+( Belum diambil / belum lulus:
+- Matematika
+- Bahasa Inggris Dasar
+- Physical and Health Education )
+
+
+
+SEMESTER 1
+----------
+1. Introduction to Programming
+2. Introduction to Computational Thinking
+3. Dasar Aljabar Linear
+4. Pendidikan Pancasila
+5. Teladan Kehidupan I
+
+( Belum diambil:
+- Bahasa Inggris Pra Dasar )
+
+
+
+SEMESTER 2
+----------
+1. Struktur Data dan Algoritma
+2. Matematika Diskrit
+3. Logika Informatika
+4. Bahasa Indonesia
+5. Pendidikan Kewarganegaraan
+6. Teladan Kehidupan II
+7. Filsafat Pendidikan Kristen
+
+( Belum diambil:
+- Bahasa Inggris Dasar / Elementary English )
+
+
+
+SEMESTER 3
+----------
+1. Organisasi dan Arsitektur Komputer
+2. Perancangan Web
+3. Pengantar Basisdata
+4. Statistik dan Probabilitas
+5. Kalkulus
+6. Prinsip-Prinsip Nilai Kristiani
+
+( Belum diambil:
+- Bahasa Inggris Pra Menengah I )
+
+
+
+SEMESTER 4
+----------
+1. Pemrograman Berorientasi Objek
+
+( Belum diambil:
+- Jaringan Komputer I
+- Teknik Automata dan Kompilasi
+- Sistem Cerdas
+- Sistem Manajemen Basisdata
+- Orang Muda dan Dunia
+- Bahasa Inggris Pra Menengah II )
+
+
+
+========================================
+REKAP YANG SUDAH DIAMBIL
+========================================
+
+Total Mata Kuliah Lulus:
+- Pra-Semester : 2
+- Semester 1   : 5
+- Semester 2   : 7
+- Semester 3   : 6
+- Semester 4   : 1
+
+TOTAL = 21 Mata Kuliah Lulus
+
+
+========================================
+NILAI YANG TERCATAT
+========================================
+
+A
+- Work Education
+- Introduction to Programming
+- Introduction to Computational Thinking
+- Dasar Aljabar Linear
+- Pendidikan Pancasila
+- Matematika Diskrit
+- Logika Informatika
+- Pendidikan Kewarganegaraan
+- Teladan Kehidupan II
+- Filsafat Pendidikan Kristen
+- Computer Organization and Architecture
+- Web Design
+- Introduction to Database
+- Statistics and Probability
+- Calculus
+- Object Oriented Programming
+
+A-
+- Basic Computer Skill
+- Data Structure and Algorithms
+- Bahasa Indonesia
+- Prinsip-Prinsip Nilai Kristiani
+
+
+========================================
+CURRENT PROGRESS
+========================================
+Kamu secara efektif sudah menyelesaikan core fondasi:
+✓ Programming Fundamentals
+✓ Data Structures & Algorithms
+✓ Discrete Math & Logic
+✓ Database Intro
+✓ Web Design
+✓ Computer Architecture
+✓ Statistics & Calculus
+✓ OOP
+
+Berikutnya mulai masuk fase intermediate:
+→ Networks
+→ Automata & Compilation
+→ DBMS
+→ Expert System
+→ Frontend/Backend
+→ Operating System
+→ AI/ML path (semester lanjut)
+
+========================================
