@@ -86,6 +86,20 @@ func main() {
 		deliveryhttp.AuthMiddleware(authUC, "Admin")(adminHandler.DeleteCourseHandler))
 	mux.HandleFunc("GET /api/v1/admin/registrations",
 		deliveryhttp.AuthMiddleware(authUC, "Admin")(adminHandler.GetAllRegistrationsHandler))
+	mux.HandleFunc("PUT /api/v1/admin/courses/{code}",
+		deliveryhttp.AuthMiddleware(authUC, "Admin")(adminHandler.UpdateCourseHandler))
+	mux.HandleFunc("POST /api/v1/admin/registrations/{id}/approve",
+		deliveryhttp.AuthMiddleware(authUC, "Admin")(adminHandler.ApproveRegistrationHandler))
+	mux.HandleFunc("POST /api/v1/admin/registrations/{id}/reject",
+		deliveryhttp.AuthMiddleware(authUC, "Admin")(adminHandler.RejectRegistrationHandler))
+	mux.HandleFunc("POST /api/v1/admin/students",
+		deliveryhttp.AuthMiddleware(authUC, "Admin")(adminHandler.CreateStudentHandler))
+	mux.HandleFunc("DELETE /api/v1/admin/students/{id}",
+		deliveryhttp.AuthMiddleware(authUC, "Admin")(adminHandler.DeleteStudentHandler))
+	mux.HandleFunc("GET /api/v1/admin/contract-period",
+		deliveryhttp.AuthMiddleware(authUC, "Admin")(adminHandler.GetContractPeriodHandler))
+	mux.HandleFunc("PUT /api/v1/admin/contract-period",
+		deliveryhttp.AuthMiddleware(authUC, "Admin")(adminHandler.UpdateContractPeriodHandler))
 
 	// Student Routes (Protected by AuthMiddleware requiring "Student" role)
 	mux.HandleFunc("GET /api/v1/student/dashboard",
@@ -113,7 +127,7 @@ func main() {
 	
 	server := &http.Server{
 		Addr:    ":" + port,
-		Handler: mux,
+		Handler: deliveryhttp.CORSMiddleware(mux),
 	}
 
 	log.Printf("🚀 Server listening on http://localhost:%s", port)

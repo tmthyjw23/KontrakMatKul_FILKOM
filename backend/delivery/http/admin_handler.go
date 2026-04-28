@@ -99,3 +99,74 @@ func (h *AdminHandler) GetAllRegistrationsHandler(w http.ResponseWriter, r *http
 
 	writeJSON(w, http.StatusOK, registrations)
 }
+
+// ----------------------------------------------------------------------
+// STUB HANDLERS FOR FRONTEND INTEGRATION
+// TODO: Implement full usecase/repository logic for these operations
+// ----------------------------------------------------------------------
+
+// UpdateCourseHandler handles PUT /api/v1/admin/courses/{code}
+func (h *AdminHandler) UpdateCourseHandler(w http.ResponseWriter, r *http.Request) {
+	code := r.PathValue("code")
+	var course domain.Course
+	if err := json.NewDecoder(r.Body).Decode(&course); err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": "Invalid request body"})
+		return
+	}
+	course.Code = code
+	// Stub response
+	writeJSON(w, http.StatusOK, map[string]any{"message": "Course updated", "course": course})
+}
+
+// ApproveRegistrationHandler handles POST /api/v1/admin/registrations/{id}/approve
+func (h *AdminHandler) ApproveRegistrationHandler(w http.ResponseWriter, r *http.Request) {
+	id := r.PathValue("id")
+	// Stub response
+	writeJSON(w, http.StatusOK, map[string]string{"message": "Registration " + id + " approved"})
+}
+
+// RejectRegistrationHandler handles POST /api/v1/admin/registrations/{id}/reject
+func (h *AdminHandler) RejectRegistrationHandler(w http.ResponseWriter, r *http.Request) {
+	id := r.PathValue("id")
+	// Stub response
+	writeJSON(w, http.StatusOK, map[string]string{"message": "Registration " + id + " rejected"})
+}
+
+// CreateStudentHandler handles POST /api/v1/admin/students
+func (h *AdminHandler) CreateStudentHandler(w http.ResponseWriter, r *http.Request) {
+	var student map[string]any
+	if err := json.NewDecoder(r.Body).Decode(&student); err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": "Invalid request body"})
+		return
+	}
+	// Stub response
+	writeJSON(w, http.StatusCreated, map[string]any{"message": "Student created", "student": student})
+}
+
+// DeleteStudentHandler handles DELETE /api/v1/admin/students/{id}
+func (h *AdminHandler) DeleteStudentHandler(w http.ResponseWriter, r *http.Request) {
+	id := r.PathValue("id")
+	// Stub response
+	writeJSON(w, http.StatusOK, map[string]string{"message": "Student " + id + " deleted"})
+}
+
+// GetContractPeriodHandler handles GET /api/v1/admin/contract-period
+func (h *AdminHandler) GetContractPeriodHandler(w http.ResponseWriter, r *http.Request) {
+	// Stub response - returning a mocked contract period
+	writeJSON(w, http.StatusOK, map[string]any{
+		"is_open":    true,
+		"start_date": "2026-01-01T00:00:00Z",
+		"end_date":   "2026-12-31T23:59:59Z",
+	})
+}
+
+// UpdateContractPeriodHandler handles PUT /api/v1/admin/contract-period
+func (h *AdminHandler) UpdateContractPeriodHandler(w http.ResponseWriter, r *http.Request) {
+	var period map[string]any
+	if err := json.NewDecoder(r.Body).Decode(&period); err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": "Invalid request body"})
+		return
+	}
+	// Stub response
+	writeJSON(w, http.StatusOK, map[string]any{"message": "Contract period updated", "period": period})
+}

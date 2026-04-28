@@ -10,6 +10,7 @@ export interface Course {
   code: string;
   name: string;
   sks: number;
+  quota?: number; // maps to backend cohort_target
   lecturer: string;
   schedules: Schedule[];
   color?: string;

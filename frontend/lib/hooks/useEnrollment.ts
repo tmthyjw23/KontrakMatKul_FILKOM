@@ -3,78 +3,34 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
-import { apiClient } from "@/lib/api/client";
+import { studentApi } from "@/lib/api/admin";
+import { useAuthStore } from "@/lib/store/useAuthStore";
 import type { Course } from "@/src/types/course";
 
-type EnrollmentRequest = {
-  course_id: number;
-};
-
-type ApiResponse<T> = {
-  code: number;
-  status: string;
-  message: string;
-  data: T;
-};
-
-type EnrollmentResult = {
-  enrollment: {
-    id: number;
-    user_id: number;
-    course_id: number;
-    enrolled_at: string;
-  };
-};
-
-type EnrollmentSuccess = {
-  results: EnrollmentResult[];
-};
-
-function toEnrollmentPayload(course: Course): EnrollmentRequest {
-  const numericCourseId = Number(course.id);
-
-  if (!Number.isFinite(numericCourseId)) {
-    throw new Error(`Invalid course id for enrollment: ${course.code}`);
-  }
-
-  return {
-    course_id: numericCourseId,
-  };
-}
+type EnrollmentSuccess = { count: number };
 
 function extractApiErrorMessage(error: unknown): string {
   if (axios.isAxiosError(error)) {
-    const message = error.response?.data?.message;
-    const status = error.response?.status;
-
-    if ((status === 400 || status === 409) && typeof message === "string") {
-      return message;
-    }
-
-    if (typeof message === "string") {
-      return message;
-    }
+    const data = error.response?.data;
+    // Backend may return { error: "..." } or { message: "..." }
+    const message = data?.message ?? data?.error;
+    if (typeof message === "string") return message;
   }
-
-  if (error instanceof Error) {
-    return error.message;
-  }
-
+  if (error instanceof Error) return error.message;
   return "Failed to submit enrollment.";
 }
 
-async function submitEnrollment(selectedCourses: Course[]): Promise<EnrollmentSuccess> {
-  const results: EnrollmentResult[] = [];
+async function submitEnrollment(
+  selectedCourses: Course[],
+  nim: string
+): Promise<EnrollmentSuccess> {
+  if (!nim) {
+    throw new Error("User NIM not available. Please log in again.");
+  }
 
   for (const course of selectedCourses) {
     try {
-      const payload = toEnrollmentPayload(course);
-      const response = await apiClient.post<ApiResponse<EnrollmentResult>>(
-        "/enrollments",
-        payload
-      );
-
-      results.push(response.data.data);
+      await studentApi.registerCourse(nim, course.code);
     } catch (error) {
       const message = extractApiErrorMessage(error);
       throw new Error(
@@ -83,14 +39,17 @@ async function submitEnrollment(selectedCourses: Course[]): Promise<EnrollmentSu
     }
   }
 
-  return { results };
+  return { count: selectedCourses.length };
 }
 
 export function useEnrollment() {
   const queryClient = useQueryClient();
+  const user = useAuthStore((state) => state.user);
+  const nim = user?.student_number ?? "";
 
   return useMutation({
-    mutationFn: submitEnrollment,
+    mutationFn: (selectedCourses: Course[]) =>
+      submitEnrollment(selectedCourses, nim),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["courses"] });
     },

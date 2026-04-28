@@ -21,6 +21,7 @@ function formatSchedules(schedules: Schedule[]) {
 
 export function CourseCard({ course }: CourseCardProps) {
   const addCourse = useContractStore((state) => state.addCourse);
+  const removeCourse = useContractStore((state) => state.removeCourse);
   const selectedCourses = useContractStore(
     (state: ContractState) => state.selectedCourses
   );
@@ -31,12 +32,20 @@ export function CourseCard({ course }: CourseCardProps) {
   const isSelected = selectedCourses.some((item) => item.id === course.id);
   const isConflicted = isSelected && hasVisualConflict(course.id);
 
+  const handleToggle = () => {
+    if (isSelected) {
+      removeCourse(course.id);
+    } else {
+      addCourse(course.id);
+    }
+  };
+
   return (
     <motion.button
       type="button"
       whileHover={{ scale: 1.015 }}
       whileTap={{ scale: 0.995 }}
-      onClick={() => addCourse(course.id)}
+      onClick={handleToggle}
       className={[
         "w-full rounded-[1.5rem] border px-5 py-4 text-left transition-all duration-300",
         "bg-white/[0.04] backdrop-blur-md",

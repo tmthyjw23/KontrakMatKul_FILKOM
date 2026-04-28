@@ -1,6 +1,7 @@
 "use client";
 
 import { create } from "zustand";
+import { toast } from "sonner";
 
 import type { Course, Schedule, VisualConflictMap } from "@/src/types/course";
 
@@ -148,6 +149,11 @@ export const useContractStore = create<ContractState>((set, get) => ({
     const alreadySelected = selectedCourses.some((item) => item.id === courseId);
 
     if (alreadySelected) {
+      return;
+    }
+
+    if (get().totalSks + course.sks > get().maxSks) {
+      toast.error(`Gagal menambahkan: SKS maksimal adalah ${get().maxSks}`);
       return;
     }
 

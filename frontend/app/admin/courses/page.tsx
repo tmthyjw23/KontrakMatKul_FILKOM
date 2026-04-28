@@ -107,13 +107,19 @@ function CoursesContent() {
 
     try {
       setIsSaving(true);
+      // Map ScheduleFormData (camelCase) → Schedule (snake_case) for the API layer
       const payload = {
         code: formData.code,
         name: formData.name,
         sks: Number(formData.sks),
         quota: Number(formData.quota),
         lecturer: formData.lecturer,
-        schedules: formData.schedules,
+        schedules: formData.schedules.map((s) => ({
+          day: s.dayOfWeek,
+          start_time: s.startTime,
+          end_time: s.endTime,
+          room: s.room,
+        })),
       };
 
       if (selectedCourse) {
@@ -193,7 +199,7 @@ function CoursesContent() {
                     key: "sks",
                     label: "SKS",
                     width: "10%",
-                    render: (sks) => <span>{sks}</span>,
+                    render: (sks) => <span>{String(sks ?? "")}</span>,
                   },
                   {
                     key: "lecturer",

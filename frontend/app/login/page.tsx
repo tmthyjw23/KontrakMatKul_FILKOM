@@ -7,11 +7,12 @@ import { motion } from "framer-motion";
 import { Input } from "@/components/ui/form";
 import { useAuthStore } from "@/lib/store/useAuthStore";
 import { authApi } from "@/lib/api/admin";
-import type { UserRole } from "@/src/types/auth";
+import type { UserRole, User } from "@/src/types/auth";
 
 export default function LoginPage() {
   const router = useRouter();
   const setAuth = useAuthStore((state) => state.setAuth);
+  const setUser = useAuthStore((state) => state.setUser);
   const [role, setRole] = useState<UserRole>("student");
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -44,17 +45,34 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      const response = await authApi.login({
+      const loginResult = await authApi.login({
         student_number: formData.student_number,
         password: formData.password,
         role,
       });
 
-      setAuth(response.user, response.token);
-      toast.success(`Welcome, ${response.user.name}!`);
+      // Store auth immediately so the token is available for follow-up calls
+      setAuth(loginResult.user as User, loginResult.token);
 
-      // Redirect based on role
-      router.push(role === "admin" ? "/admin" : "/student");
+      // For students, fetch the full profile to get the real name
+      // (backend login only returns token+role; name comes from the profile endpoint)
+      if (loginResult.user.role === "student" && loginResult.user.student_number) {
+        try {
+          const profile = await authApi.getProfile(loginResult.user.student_number);
+          setUser({
+            ...loginResult.user,
+            name: profile.name || loginResult.user.name,
+          } as User);
+        } catch {
+          // Profile fetch failed — keep the NIM-based fallback name
+        }
+      }
+
+      const displayName = useAuthStore.getState().user?.name ?? loginResult.user.name;
+      toast.success(`Welcome, ${displayName}!`);
+
+      // Redirect based on role from the JWT (not the UI selector)
+      router.push(loginResult.user.role === "admin" ? "/admin" : "/student");
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "Login failed. Please try again.";

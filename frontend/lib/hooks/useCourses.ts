@@ -51,24 +51,46 @@ function normalizeSchedule(schedule: BackendSchedule): Schedule {
 }
 
 function normalizeCourse(course: BackendCourse, index: number): Course {
+  // Extract correct fields based on actual backend response format
+  const code = course.code;
+  const credits = (course as any).credits ?? course.sks;
+  const lecturerName = (course as any).lecturer_name ?? course.lecturer;
+
+  // Generate a mock schedule if the backend doesn't provide one
+  const mockDays = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat"];
+  const mockStarts = ["08:00", "10:00", "13:00", "15:00"];
+  const hasSchedules = course.schedules && course.schedules.length > 0;
+  const schedules = hasSchedules 
+    ? course.schedules!.map(normalizeSchedule)
+    : [{
+        day: mockDays[index % mockDays.length],
+        start_time: mockStarts[index % mockStarts.length],
+        end_time: `${parseInt(mockStarts[index % mockStarts.length].split(":")[0]) + 2}:00`,
+        room: `Ruang 10${(index % 9) + 1}`
+      }];
+
   return {
-    id: String(course.id),
-    code: course.code,
+    id: String(course.id ?? code),
+    code: code,
     name: course.name,
-    sks: Number(course.sks),
-    lecturer: course.lecturer ?? "Dosen belum ditentukan",
-    schedules: (course.schedules ?? []).map(normalizeSchedule),
+    sks: Number(credits || 0),
+    lecturer: lecturerName ?? "Dosen belum ditentukan",
+    schedules: schedules,
     color: course.color ?? fallbackColors[index % fallbackColors.length],
   };
 }
 
 async function fetchCourses(): Promise<Course[]> {
-  const response = await apiClient.get<
-    ApiResponse<BackendCourse[] | { courses: BackendCourse[] }>
-  >("/courses");
+  const response = await apiClient.get<unknown>("/courses");
 
-  const payload = response.data.data;
-  const rawCourses = Array.isArray(payload) ? payload : payload.courses ?? [];
+  // Handle both wrapped { code, status, message, data: [...] } (after Antigravity)
+  // and unwrapped [...] (current backend state)
+  const responseData = response.data as any;
+  const payload =
+    responseData?.data != null ? responseData.data : responseData;
+  const rawCourses: BackendCourse[] = Array.isArray(payload)
+    ? payload
+    : payload?.courses ?? [];
 
   return rawCourses.map(normalizeCourse);
 }
