@@ -12,12 +12,20 @@ import { Input } from "@/components/ui/form";
 import { adminApi } from "@/lib/api/admin";
 import type { Course } from "@/src/types/course";
 
+interface ScheduleFormData {
+  dayOfWeek: string;
+  startTime: string;
+  endTime: string;
+  room: string;
+}
+
 interface CourseFormData {
   code: string;
   name: string;
   sks: string;
   quota: string;
   lecturer: string;
+  schedules: ScheduleFormData[];
 }
 
 function CoursesContent() {
@@ -33,6 +41,7 @@ function CoursesContent() {
     sks: "",
     quota: "",
     lecturer: "",
+    schedules: [],
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -54,7 +63,7 @@ function CoursesContent() {
 
   function openCreateModal() {
     setSelectedCourse(null);
-    setFormData({ code: "", name: "", sks: "", quota: "", lecturer: "" });
+    setFormData({ code: "", name: "", sks: "", quota: "", lecturer: "", schedules: [] });
     setErrors({});
     setIsModalOpen(true);
   }
@@ -67,6 +76,7 @@ function CoursesContent() {
       sks: String(course.sks),
       quota: String(course.quota),
       lecturer: course.lecturer,
+      schedules: (course as any).schedules || [],
     });
     setErrors({});
     setIsModalOpen(true);
@@ -103,6 +113,7 @@ function CoursesContent() {
         sks: Number(formData.sks),
         quota: Number(formData.quota),
         lecturer: formData.lecturer,
+        schedules: formData.schedules,
       };
 
       if (selectedCourse) {
@@ -257,25 +268,27 @@ function CoursesContent() {
             disabled={isSaving}
           />
 
-          <Input
-            label="SKS (Credit Hours)"
-            type="number"
-            placeholder="e.g., 3"
-            value={formData.sks}
-            onChange={(e) => setFormData({ ...formData, sks: e.target.value })}
-            error={errors.sks}
-            disabled={isSaving}
-          />
+          <div className="grid grid-cols-2 gap-4">
+            <Input
+              label="SKS (Credit Hours)"
+              type="number"
+              placeholder="e.g., 3"
+              value={formData.sks}
+              onChange={(e) => setFormData({ ...formData, sks: e.target.value })}
+              error={errors.sks}
+              disabled={isSaving}
+            />
 
-          <Input
-            label="Quota"
-            type="number"
-            placeholder="e.g., 40"
-            value={formData.quota}
-            onChange={(e) => setFormData({ ...formData, quota: e.target.value })}
-            error={errors.quota}
-            disabled={isSaving}
-          />
+            <Input
+              label="Quota"
+              type="number"
+              placeholder="e.g., 40"
+              value={formData.quota}
+              onChange={(e) => setFormData({ ...formData, quota: e.target.value })}
+              error={errors.quota}
+              disabled={isSaving}
+            />
+          </div>
 
           <Input
             label="Lecturer Name"
@@ -286,6 +299,113 @@ function CoursesContent() {
             }
             disabled={isSaving}
           />
+
+          <div className="space-y-3 pt-4 border-t border-white/10">
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-medium text-zinc-300">Schedules</h3>
+              <button
+                type="button"
+                onClick={() => 
+                  setFormData({ 
+                    ...formData, 
+                    schedules: [...formData.schedules, { dayOfWeek: "Monday", startTime: "08:00", endTime: "10:00", room: "" }] 
+                  })
+                }
+                disabled={isSaving}
+                className="text-xs text-emerald-400 hover:text-emerald-300 transition"
+              >
+                + Add Slot
+              </button>
+            </div>
+
+            {formData.schedules.map((schedule, index) => (
+              <div 
+                key={index} 
+                className="p-3 rounded-lg bg-white/[0.03] border border-white/10 space-y-3"
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-xs text-zinc-500 font-medium">Slot {index + 1}</span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const newSchedules = [...formData.schedules];
+                      newSchedules.splice(index, 1);
+                      setFormData({ ...formData, schedules: newSchedules });
+                    }}
+                    disabled={isSaving}
+                    className="text-xs text-red-400 hover:text-red-300 transition"
+                  >
+                    Remove
+                  </button>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1">
+                    <label className="text-[10px] uppercase tracking-wider text-zinc-500 font-bold">Day</label>
+                    <select 
+                      value={schedule.dayOfWeek}
+                      onChange={(e) => {
+                        const newSchedules = [...formData.schedules];
+                        newSchedules[index].dayOfWeek = e.target.value;
+                        setFormData({ ...formData, schedules: newSchedules });
+                      }}
+                      className="w-full bg-zinc-900 border border-white/10 rounded-md px-2 py-1.5 text-sm text-white focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                    >
+                      <option value="Monday">Monday</option>
+                      <option value="Tuesday">Tuesday</option>
+                      <option value="Wednesday">Wednesday</option>
+                      <option value="Thursday">Thursday</option>
+                      <option value="Friday">Friday</option>
+                      <option value="Saturday">Saturday</option>
+                    </select>
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-[10px] uppercase tracking-wider text-zinc-500 font-bold">Room</label>
+                    <input 
+                      type="text"
+                      value={schedule.room}
+                      onChange={(e) => {
+                        const newSchedules = [...formData.schedules];
+                        newSchedules[index].room = e.target.value;
+                        setFormData({ ...formData, schedules: newSchedules });
+                      }}
+                      placeholder="e.g., GK1-307"
+                      className="w-full bg-zinc-900 border border-white/10 rounded-md px-2 py-1.5 text-sm text-white focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1">
+                    <label className="text-[10px] uppercase tracking-wider text-zinc-500 font-bold">Start Time</label>
+                    <input 
+                      type="time"
+                      value={schedule.startTime}
+                      onChange={(e) => {
+                        const newSchedules = [...formData.schedules];
+                        newSchedules[index].startTime = e.target.value;
+                        setFormData({ ...formData, schedules: newSchedules });
+                      }}
+                      className="w-full bg-zinc-900 border border-white/10 rounded-md px-2 py-1.5 text-sm text-white focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-[10px] uppercase tracking-wider text-zinc-500 font-bold">End Time</label>
+                    <input 
+                      type="time"
+                      value={schedule.endTime}
+                      onChange={(e) => {
+                        const newSchedules = [...formData.schedules];
+                        newSchedules[index].endTime = e.target.value;
+                        setFormData({ ...formData, schedules: newSchedules });
+                      }}
+                      className="w-full bg-zinc-900 border border-white/10 rounded-md px-2 py-1.5 text-sm text-white focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </Modal>
 

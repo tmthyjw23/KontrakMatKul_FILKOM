@@ -8,7 +8,9 @@ import {
   formatHourLabel,
   SCHEDULE_DURATION_MINUTES,
   SCHEDULE_START_MINUTES,
+  normalizeDay,
 } from "@/lib/utils/schedule";
+
 import type { Course, Schedule } from "@/src/types/course";
 
 const DAYS = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat"] as const;
@@ -37,7 +39,7 @@ export function ScheduleGrid() {
   >((accumulator, day) => {
     accumulator[day] = selectedCourses.flatMap((course) =>
       course.schedules
-        .filter((schedule) => schedule.day === day)
+        .filter((schedule) => normalizeDay(schedule.day) === day)
         .map((slot) => ({ ...course, slot }))
     );
 

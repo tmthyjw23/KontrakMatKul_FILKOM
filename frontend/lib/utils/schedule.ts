@@ -1,4 +1,34 @@
+export function normalizeDay(day: string): string {
+  const mapping: Record<string, string> = {
+    "monday": "Senin",
+    "senin": "Senin",
+    "mon": "Senin",
+    "tuesday": "Selasa",
+    "selasa": "Selasa",
+    "tue": "Selasa",
+    "wednesday": "Rabu",
+    "rabu": "Rabu",
+    "wed": "Rabu",
+    "thursday": "Kamis",
+    "kamis": "Kamis",
+    "thu": "Kamis",
+    "friday": "Jumat",
+    "jumat": "Jumat",
+    "fri": "Jumat",
+    "saturday": "Sabtu",
+    "sabtu": "Sabtu",
+    "sat": "Sabtu",
+    "sunday": "Minggu",
+    "minggu": "Minggu",
+    "sun": "Minggu",
+  };
+
+  const normalized = mapping[day.toLowerCase().trim()];
+  return normalized ?? day;
+}
+
 export const SCHEDULE_START_TIME = "07:00";
+
 export const SCHEDULE_END_TIME = "18:00";
 export const SCHEDULE_START_MINUTES = 7 * 60;
 export const SCHEDULE_END_MINUTES = 18 * 60;
