@@ -12,12 +12,12 @@ import type { StudentEnrollment } from "@/src/types/auth";
 import type { Course } from "@/src/types/course";
 
 const DAYS_OF_WEEK = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
+  "Senin",
+  "Selasa",
+  "Rabu",
+  "Kamis",
+  "Jumat",
+  "Sabtu",
 ];
 const TIME_SLOTS = [
   "07:00",
