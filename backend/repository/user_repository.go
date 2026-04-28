@@ -142,3 +142,23 @@ func (r *userRepository) UpdatePassword(ctx context.Context, nim, passwordHash s
 
 	return nil
 }
+
+// Delete removes a student record from the database.
+func (r *userRepository) Delete(ctx context.Context, nim string) error {
+	query := `DELETE FROM students WHERE nim = ?`
+
+	result, err := r.db.ExecContext(ctx, query, nim)
+	if err != nil {
+		return fmt.Errorf("error deleting student: %w", err)
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return fmt.Errorf("error checking rows affected: %w", err)
+	}
+	if rowsAffected == 0 {
+		return fmt.Errorf("student with NIM %s not found", nim)
+	}
+
+	return nil
+}

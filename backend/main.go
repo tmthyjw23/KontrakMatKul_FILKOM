@@ -110,6 +110,8 @@ func main() {
 		deliveryhttp.AuthMiddleware(authUC, "Student")(studentHandler.GetProfileHandler))
 	mux.HandleFunc("POST /api/v1/student/courses/register",
 		deliveryhttp.AuthMiddleware(authUC, "Student")(studentHandler.RegisterCourseHandler))
+	mux.HandleFunc("POST /api/v1/student/courses/bulk-register",
+		deliveryhttp.AuthMiddleware(authUC, "Student")(studentHandler.BulkRegisterCourseHandler))
 	mux.HandleFunc("GET /api/v1/student/registrations/{nim}",
 		deliveryhttp.AuthMiddleware(authUC, "Student")(studentHandler.GetMyRegistrationsHandler))
 	mux.HandleFunc("DELETE /api/v1/student/registrations/{id}",

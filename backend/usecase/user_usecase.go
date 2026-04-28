@@ -82,3 +82,16 @@ func (u *userUsecase) ResetPassword(ctx context.Context, nim, newRawPassword str
 
 	return nil
 }
+
+// DeleteStudent removes a student by NIM.
+func (u *userUsecase) DeleteStudent(ctx context.Context, nim string) error {
+	if nim == "" {
+		return fmt.Errorf("NIM cannot be empty")
+	}
+
+	if err := u.userRepo.Delete(ctx, nim); err != nil {
+		return fmt.Errorf("DeleteStudent: %w", err)
+	}
+
+	return nil
+}

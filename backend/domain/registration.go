@@ -35,6 +35,7 @@ type RegistrationRepository interface {
 // RegistrationUsecase defines the contract for Registration business logic.
 type RegistrationUsecase interface {
 	RegisterCourse(ctx context.Context, nim, courseCode string) (*Registration, error)
+	BulkRegisterCourse(ctx context.Context, nim string, courseCodes []string) ([]Registration, error)
 	GetRegistrationsByNIM(ctx context.Context, nim string) ([]Registration, error)
 	GetAllRegistrations(ctx context.Context) ([]Registration, error)
 	CancelRegistration(ctx context.Context, id int) error

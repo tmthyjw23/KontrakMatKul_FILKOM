@@ -12,6 +12,8 @@ export interface ContractState {
   selectedCourses: Course[];
   totalSks: number;
   maxSks: number;
+  baseSks: number;
+  setBaseSks: (sks: number) => void;
   setCourses: (courses: Course[]) => void;
   clearSelectedCourses: () => void;
   addCourse: (courseId: Course["id"]) => void;
@@ -20,8 +22,8 @@ export interface ContractState {
   hasVisualConflict: (courseId: Course["id"]) => boolean;
 }
 
-function calculateTotalSks(selectedCourses: Course[]): number {
-  return selectedCourses.reduce((total, item) => total + item.sks, 0);
+function calculateTotalSks(selectedCourses: Course[], baseSks: number = 0): number {
+  return selectedCourses.reduce((total, item) => total + item.sks, baseSks);
 }
 
 function haveSameCourseIds(left: Course[], right: Course[]): boolean {
@@ -109,6 +111,13 @@ export const useContractStore = create<ContractState>((set, get) => ({
   selectedCourses: [],
   totalSks: 0,
   maxSks: MAX_SKS,
+  baseSks: 0,
+  setBaseSks: (sks) => {
+    set((state) => ({
+      baseSks: sks,
+      totalSks: calculateTotalSks(state.selectedCourses, sks),
+    }));
+  },
   setCourses: (courses) => {
     set((state) => {
       const currentSelectedIds = new Set(
@@ -128,14 +137,14 @@ export const useContractStore = create<ContractState>((set, get) => ({
       return {
         courses,
         selectedCourses: syncedSelectedCourses,
-        totalSks: calculateTotalSks(syncedSelectedCourses),
+        totalSks: calculateTotalSks(syncedSelectedCourses, state.baseSks),
       };
     });
   },
   clearSelectedCourses: () => {
     set({
       selectedCourses: [],
-      totalSks: 0,
+      totalSks: get().baseSks,
     });
   },
   addCourse: (courseId) => {
@@ -161,7 +170,7 @@ export const useContractStore = create<ContractState>((set, get) => ({
 
     set({
       selectedCourses: nextSelectedCourses,
-      totalSks: calculateTotalSks(nextSelectedCourses),
+      totalSks: calculateTotalSks(nextSelectedCourses, get().baseSks),
     });
   },
   removeCourse: (courseId) => {
@@ -171,7 +180,7 @@ export const useContractStore = create<ContractState>((set, get) => ({
 
     set({
       selectedCourses: nextSelectedCourses,
-      totalSks: calculateTotalSks(nextSelectedCourses),
+      totalSks: calculateTotalSks(nextSelectedCourses, get().baseSks),
     });
   },
   getVisualConflictMap: () => buildVisualConflictMap(get().selectedCourses),

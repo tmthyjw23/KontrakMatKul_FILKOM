@@ -197,9 +197,12 @@ func (h *AdminHandler) CreateStudentHandler(w http.ResponseWriter, r *http.Reque
 
 // DeleteStudentHandler handles DELETE /api/v1/admin/students/{id}
 func (h *AdminHandler) DeleteStudentHandler(w http.ResponseWriter, r *http.Request) {
-	id := r.PathValue("id")
-	// Stub response
-	writeJSON(w, http.StatusOK, map[string]string{"message": "Student " + id + " deleted"})
+	nim := r.PathValue("id")
+	if err := h.UserUsecase.DeleteStudent(r.Context(), nim); err != nil {
+		writeJSON(w, http.StatusInternalServerError, map[string]string{"error": err.Error()})
+		return
+	}
+	writeJSON(w, http.StatusOK, map[string]string{"message": "Student " + nim + " deleted successfully"})
 }
 
 // ResetStudentPasswordHandler handles POST /api/v1/admin/students/{nim}/reset-password

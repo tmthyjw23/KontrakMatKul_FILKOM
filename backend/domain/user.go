@@ -23,6 +23,7 @@ type UserRepository interface {
 	GetPasswordHashByNIM(ctx context.Context, nim string) (string, error)
 	CreateStudent(ctx context.Context, student *Student, passwordHash string) error
 	UpdatePassword(ctx context.Context, nim, passwordHash string) error
+	Delete(ctx context.Context, nim string) error
 }
 
 // UserUsecase defines the contract for User business logic operations.
@@ -32,4 +33,5 @@ type UserUsecase interface {
 	GetAllStudents(ctx context.Context) ([]Student, error)
 	CreateStudent(ctx context.Context, student *Student, rawPassword string) error
 	ResetPassword(ctx context.Context, nim, newRawPassword string) error
+	DeleteStudent(ctx context.Context, nim string) error
 }

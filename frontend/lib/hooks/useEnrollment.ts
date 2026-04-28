@@ -28,15 +28,11 @@ async function submitEnrollment(
     throw new Error("User NIM not available. Please log in again.");
   }
 
-  for (const course of selectedCourses) {
-    try {
-      await studentApi.registerCourse(nim, course.code);
-    } catch (error) {
-      const message = extractApiErrorMessage(error);
-      throw new Error(
-        message.includes(course.code) ? message : `${message} (${course.code})`
-      );
-    }
+  const courseCodes = selectedCourses.map((c) => c.code);
+  try {
+    await studentApi.bulkRegisterCourses(nim, courseCodes);
+  } catch (error) {
+    throw new Error(extractApiErrorMessage(error));
   }
 
   return { count: selectedCourses.length };

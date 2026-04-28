@@ -349,6 +349,18 @@ export const studentApi = {
     return extractData<unknown>(res.data);
   },
 
+  // POST /api/v1/student/courses/bulk-register → { nim, course_codes }
+  bulkRegisterCourses: async (
+    nim: string,
+    courseCodes: string[]
+  ): Promise<unknown> => {
+    const res = await apiClient.post<unknown>("/student/courses/bulk-register", {
+      nim,
+      course_codes: courseCodes,
+    });
+    return extractData<unknown>(res.data);
+  },
+
   // DELETE /api/v1/student/registrations/{id}
   cancelRegistration: async (id: string | number): Promise<unknown> => {
     const res = await apiClient.delete<unknown>(

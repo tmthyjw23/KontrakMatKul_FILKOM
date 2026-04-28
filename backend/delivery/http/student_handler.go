@@ -163,3 +163,44 @@ func (h *StudentHandler) CancelRegistrationHandler(w http.ResponseWriter, r *htt
 		"message": "Registration cancelled successfully",
 	})
 }
+
+// BulkRegisterCourseHandler handles POST /api/v1/student/courses/bulk-register
+func (h *StudentHandler) BulkRegisterCourseHandler(w http.ResponseWriter, r *http.Request) {
+	var body struct {
+		NIM         string   `json:"nim"`
+		CourseCodes []string `json:"course_codes"`
+	}
+
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": "Invalid request body"})
+		return
+	}
+
+	if body.NIM == "" || len(body.CourseCodes) == 0 {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": "nim and course_codes are required"})
+		return
+	}
+
+	regs, err := h.RegistrationUsecase.BulkRegisterCourse(r.Context(), body.NIM, body.CourseCodes)
+	if err != nil {
+		if errors.Is(err, domain.ErrMaxCreditsExceeded) {
+			writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
+			return
+		}
+		if errors.Is(err, domain.ErrScheduleConflict) {
+			writeJSON(w, http.StatusConflict, map[string]string{"error": err.Error()})
+			return
+		}
+		if errors.Is(err, domain.ErrPendingRegistration) {
+			writeJSON(w, http.StatusForbidden, map[string]string{"error": err.Error()})
+			return
+		}
+		writeJSON(w, http.StatusUnprocessableEntity, map[string]string{"error": err.Error()})
+		return
+	}
+
+	writeJSON(w, http.StatusCreated, map[string]any{
+		"message":       fmt.Sprintf("Successfully registered %d courses", len(regs)),
+		"registrations": regs,
+	})
+}

@@ -80,7 +80,7 @@ func (u *registrationUsecase) RegisterCourse(ctx context.Context, nim, courseCod
 	var activeCourseCodes []string
 
 	for _, r := range existingRegs {
-		if r.Status == "registered" {
+		if r.Status == "approved" || r.Status == "registered" {
 			if r.CourseCode == courseCode {
 				return nil, fmt.Errorf("RegisterCourse: student %s is already registered for course %s", nim, courseCode)
 			}
@@ -140,6 +140,128 @@ func (u *registrationUsecase) RegisterCourse(ctx context.Context, nim, courseCod
 	}
 
 	return reg, nil
+}
+
+// BulkRegisterCourse handles multiple course registrations in one go.
+func (u *registrationUsecase) BulkRegisterCourse(ctx context.Context, nim string, courseCodes []string) ([]domain.Registration, error) {
+	if nim == "" {
+		return nil, fmt.Errorf("student NIM cannot be empty")
+	}
+	if len(courseCodes) == 0 {
+		return nil, fmt.Errorf("no course codes provided")
+	}
+
+	// 1. Fetch existing registrations
+	existingRegs, err := u.regRepo.GetByNIM(ctx, nim)
+	if err != nil {
+		return nil, fmt.Errorf("BulkRegisterCourse: %w", err)
+	}
+
+	// 2. NEW RULE: Block if there are already pending registrations
+	for _, r := range existingRegs {
+		if r.Status == "pending" {
+			return nil, domain.ErrPendingRegistration
+		}
+	}
+
+	// 3. Collect all "active" courses (approved or registered)
+	var activeCourses []domain.Course
+	var activeCourseCodes []string
+	totalSks := 0
+
+	for _, r := range existingRegs {
+		if r.Status == "approved" || r.Status == "registered" {
+			c, err := u.courseRepo.GetByCode(ctx, r.CourseCode)
+			if err != nil {
+				return nil, fmt.Errorf("BulkRegisterCourse: error fetching active course: %w", err)
+			}
+			activeCourses = append(activeCourses, *c)
+			activeCourseCodes = append(activeCourseCodes, r.CourseCode)
+			totalSks += c.Credits
+		}
+	}
+
+	// 4. Validate each new course
+	var newRegistrations []domain.Registration
+	var newCourses []domain.Course
+
+	for _, code := range courseCodes {
+		// Check for duplicate in request
+		for _, alreadyAdded := range newRegistrations {
+			if alreadyAdded.CourseCode == code {
+				return nil, fmt.Errorf("duplicate course code in request: %s", code)
+			}
+		}
+		// Check if already registered
+		for _, activeCode := range activeCourseCodes {
+			if activeCode == code {
+				return nil, fmt.Errorf("student is already registered for course %s", code)
+			}
+		}
+
+		course, err := u.courseRepo.GetByCode(ctx, code)
+		if err != nil {
+			return nil, fmt.Errorf("course %s not found", code)
+		}
+
+		totalSks += course.Credits
+		newCourses = append(newCourses, *course)
+		newRegistrations = append(newRegistrations, domain.Registration{
+			StudentNIM: nim,
+			CourseCode: code,
+		})
+	}
+
+	// 5. Check SKS limit
+	if totalSks > 24 {
+		return nil, domain.ErrMaxCreditsExceeded
+	}
+
+	// 6. Check conflicts (between new courses and between new & active)
+	allCoursesToCompare := append([]domain.Course{}, activeCourses...)
+	for _, newC := range newCourses {
+		newSchedules, err := u.courseRepo.GetSchedulesByCourseCode(ctx, newC.Code)
+		if err != nil {
+			return nil, fmt.Errorf("error fetching schedules for %s: %w", newC.Code, err)
+		}
+
+		// Compare newC with all existing/active courses
+		for _, otherC := range allCoursesToCompare {
+			otherSchedules, err := u.courseRepo.GetSchedulesByCourseCode(ctx, otherC.Code)
+			if err != nil {
+				return nil, fmt.Errorf("error fetching schedules for %s: %w", otherC.Code, err)
+			}
+
+			for _, ns := range newSchedules {
+				for _, os := range otherSchedules {
+					if ns.DayOfWeek == os.DayOfWeek {
+						overlap, err := isTimeOverlap(ns.StartTime, ns.EndTime, os.StartTime, os.EndTime)
+						if err != nil {
+							return nil, err
+						}
+						if overlap {
+							return nil, fmt.Errorf("%w: conflict between %s and %s on %s", 
+								domain.ErrScheduleConflict, newC.Code, otherC.Code, ns.DayOfWeek)
+						}
+					}
+				}
+			}
+		}
+		// Add newC to comparison pool for subsequent new courses in this batch
+		allCoursesToCompare = append(allCoursesToCompare, newC)
+	}
+
+	// 7. Everything passed, save them
+	var saved []domain.Registration
+	for _, reg := range newRegistrations {
+		r := reg
+		if err := u.regRepo.Create(ctx, &r); err != nil {
+			return nil, fmt.Errorf("BulkRegisterCourse: error saving %s: %w", reg.CourseCode, err)
+		}
+		saved = append(saved, r)
+	}
+
+	return saved, nil
 }
 
 // GetRegistrationsByNIM fetches all registrations for a given student.

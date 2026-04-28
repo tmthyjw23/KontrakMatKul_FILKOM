@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { useAuth } from "@/lib/store/useAuthStore";
+import { useAuth, useAuthStore } from "@/lib/store/useAuthStore";
 
 import { CourseCard } from "@/components/dashboard/course-card";
 import { ScheduleGrid } from "@/components/dashboard/schedule-grid";
@@ -13,6 +13,7 @@ import { useCourses } from "@/lib/hooks/useCourses";
 import { useEnrollment } from "@/lib/hooks/useEnrollment";
 import { useContractStore } from "@/lib/store/useContractStore";
 import type { ContractState } from "@/lib/store/useContractStore";
+import { studentApi } from "@/lib/api/admin";
 
 export default function Home() {
   const router = useRouter();
@@ -34,6 +35,8 @@ export default function Home() {
   );
   const totalSks = useContractStore((state: ContractState) => state.totalSks);
   const maxSks = useContractStore((state: ContractState) => state.maxSks);
+  const setBaseSks = useContractStore((state: ContractState) => state.setBaseSks);
+  const user = useAuthStore((state) => state.user);
   const {
     data: fetchedCourses,
     isLoading: isCoursesLoading,
@@ -56,6 +59,22 @@ export default function Home() {
 
     setCourses(fetchedCourses);
   }, [fetchedCourses, setCourses]);
+
+  useEffect(() => {
+    const nim = user?.student_number;
+    if (!nim) return;
+
+    studentApi.getMyRegistrations(nim).then((regs) => {
+      // Calculate SKS from approved or registered courses
+      const currentSks = regs
+        .filter((r) => r.status === "approved" || r.status === "registered" || r.status === "pending")
+        .reduce((sum, r) => {
+          const course = fetchedCourses?.find((c) => c.code === r.course_code);
+          return sum + (course?.sks ?? 0);
+        }, 0);
+      setBaseSks(currentSks);
+    }).catch(() => {});
+  }, [user?.student_number, fetchedCourses, setBaseSks]);
 
   async function handleConfirmEnrollment() {
     if (selectedCourses.length === 0) {
