@@ -1,1 +1,0 @@
-DROP TABLE IF EXISTS passed_courses;

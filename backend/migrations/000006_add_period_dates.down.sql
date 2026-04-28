@@ -1,1 +1,0 @@
-DELETE FROM system_settings WHERE setting_key IN ('enrollment_start_date', 'enrollment_end_date');
