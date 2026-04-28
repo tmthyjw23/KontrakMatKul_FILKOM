@@ -167,3 +167,23 @@ func (r *registrationRepository) Cancel(ctx context.Context, id int) error {
 
 	return nil
 }
+
+// UpdateStatus updates a registration's status (e.g., 'approved', 'rejected').
+func (r *registrationRepository) UpdateStatus(ctx context.Context, id int, status string) error {
+	query := `UPDATE registrations SET status = ? WHERE id = ?`
+
+	result, err := r.db.ExecContext(ctx, query, status, id)
+	if err != nil {
+		return fmt.Errorf("error updating registration status: %w", err)
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return fmt.Errorf("error checking rows affected: %w", err)
+	}
+	if rowsAffected == 0 {
+		return fmt.Errorf("registration with id %d not found", id)
+	}
+
+	return nil
+}

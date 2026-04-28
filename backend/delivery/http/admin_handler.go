@@ -3,6 +3,7 @@ package http
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 
 	"kontrak-matkul/domain"
 )
@@ -120,16 +121,36 @@ func (h *AdminHandler) UpdateCourseHandler(w http.ResponseWriter, r *http.Reques
 
 // ApproveRegistrationHandler handles POST /api/v1/admin/registrations/{id}/approve
 func (h *AdminHandler) ApproveRegistrationHandler(w http.ResponseWriter, r *http.Request) {
-	id := r.PathValue("id")
-	// Stub response
-	writeJSON(w, http.StatusOK, map[string]string{"message": "Registration " + id + " approved"})
+	idStr := r.PathValue("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": "Invalid registration ID"})
+		return
+	}
+
+	if err := h.RegistrationUsecase.ApproveRegistration(r.Context(), id); err != nil {
+		writeJSON(w, http.StatusInternalServerError, map[string]string{"error": err.Error()})
+		return
+	}
+
+	writeJSON(w, http.StatusOK, map[string]string{"message": "Registration approved successfully"})
 }
 
 // RejectRegistrationHandler handles POST /api/v1/admin/registrations/{id}/reject
 func (h *AdminHandler) RejectRegistrationHandler(w http.ResponseWriter, r *http.Request) {
-	id := r.PathValue("id")
-	// Stub response
-	writeJSON(w, http.StatusOK, map[string]string{"message": "Registration " + id + " rejected"})
+	idStr := r.PathValue("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": "Invalid registration ID"})
+		return
+	}
+
+	if err := h.RegistrationUsecase.RejectRegistration(r.Context(), id); err != nil {
+		writeJSON(w, http.StatusInternalServerError, map[string]string{"error": err.Error()})
+		return
+	}
+
+	writeJSON(w, http.StatusOK, map[string]string{"message": "Registration rejected successfully"})
 }
 
 // CreateStudentHandler handles POST /api/v1/admin/students

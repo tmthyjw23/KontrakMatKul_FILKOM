@@ -109,6 +109,10 @@ func (h *StudentHandler) RegisterCourseHandler(w http.ResponseWriter, r *http.Re
 			writeJSON(w, http.StatusConflict, map[string]string{"error": err.Error()})
 			return
 		}
+		if errors.Is(err, domain.ErrPendingRegistration) {
+			writeJSON(w, http.StatusForbidden, map[string]string{"error": err.Error()})
+			return
+		}
 		writeJSON(w, http.StatusUnprocessableEntity, map[string]string{"error": err.Error()})
 		return
 	}

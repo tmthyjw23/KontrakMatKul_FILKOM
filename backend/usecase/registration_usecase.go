@@ -69,6 +69,13 @@ func (u *registrationUsecase) RegisterCourse(ctx context.Context, nim, courseCod
 		return nil, fmt.Errorf("RegisterCourse: error checking existing registrations: %w", err)
 	}
 
+	// NEW RULE: If student has ANY 'pending' registrations, they cannot register for more
+	for _, r := range existingRegs {
+		if r.Status == "pending" {
+			return nil, domain.ErrPendingRegistration
+		}
+	}
+
 	totalCredits := newCourse.Credits
 	var activeCourseCodes []string
 
@@ -160,4 +167,20 @@ func (u *registrationUsecase) CancelRegistration(ctx context.Context, id int) er
 	}
 
 	return nil
+}
+
+// ApproveRegistration sets status to 'approved' (or 'registered').
+func (u *registrationUsecase) ApproveRegistration(ctx context.Context, id int) error {
+	if id <= 0 {
+		return fmt.Errorf("invalid registration ID")
+	}
+	return u.regRepo.UpdateStatus(ctx, id, "approved")
+}
+
+// RejectRegistration sets status to 'rejected'.
+func (u *registrationUsecase) RejectRegistration(ctx context.Context, id int) error {
+	if id <= 0 {
+		return fmt.Errorf("invalid registration ID")
+	}
+	return u.regRepo.UpdateStatus(ctx, id, "rejected")
 }

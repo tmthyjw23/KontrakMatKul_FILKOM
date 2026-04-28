@@ -7,8 +7,9 @@ import (
 
 // Business Rule Errors
 var (
-	ErrMaxCreditsExceeded = errors.New("Cannot register: Exceeds maximum limit of 24 SKS")
-	ErrScheduleConflict   = errors.New("Schedule conflict detected")
+	ErrMaxCreditsExceeded   = errors.New("Cannot register: Exceeds maximum limit of 24 SKS")
+	ErrScheduleConflict     = errors.New("Schedule conflict detected")
+	ErrPendingRegistration = errors.New("You have pending registrations. Please wait for admin approval.")
 )
 
 // Registration represents a student's course registration record.
@@ -28,6 +29,7 @@ type RegistrationRepository interface {
 	GetByNIM(ctx context.Context, nim string) ([]Registration, error)
 	GetAll(ctx context.Context) ([]Registration, error)
 	Cancel(ctx context.Context, id int) error
+	UpdateStatus(ctx context.Context, id int, status string) error
 }
 
 // RegistrationUsecase defines the contract for Registration business logic.
@@ -36,4 +38,6 @@ type RegistrationUsecase interface {
 	GetRegistrationsByNIM(ctx context.Context, nim string) ([]Registration, error)
 	GetAllRegistrations(ctx context.Context) ([]Registration, error)
 	CancelRegistration(ctx context.Context, id int) error
+	ApproveRegistration(ctx context.Context, id int) error
+	RejectRegistration(ctx context.Context, id int) error
 }
