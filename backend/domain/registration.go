@@ -13,11 +13,13 @@ var (
 
 // Registration represents a student's course registration record.
 type Registration struct {
-	ID         int    `json:"id"          db:"id"`
-	StudentNIM string `json:"student_nim" db:"student_nim"`
-	CourseCode string `json:"course_code" db:"course_code"`
-	Status     string `json:"status"      db:"status"` // e.g., "registered", "cancelled"
-	CreatedAt  string `json:"created_at"  db:"created_at"`
+	ID          int    `json:"id"           db:"id"`
+	StudentNIM  string `json:"student_nim"  db:"student_nim"`
+	StudentName string `json:"student_name" db:"student_name"`
+	CourseCode  string `json:"course_code"  db:"course_code"`
+	CourseName  string `json:"course_name"  db:"course_name"`
+	Status      string `json:"status"       db:"status"` // e.g., "pending", "registered", "cancelled"
+	CreatedAt   string `json:"created_at"   db:"created_at"`
 }
 
 // RegistrationRepository defines the contract for Registration data operations.
