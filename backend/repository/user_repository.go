@@ -99,3 +99,46 @@ func (r *userRepository) GetAll(ctx context.Context) ([]domain.Student, error) {
 
 	return students, nil
 }
+
+// CreateStudent inserts a new student record into the database.
+func (r *userRepository) CreateStudent(ctx context.Context, student *domain.Student, passwordHash string) error {
+	query := `
+		INSERT INTO students (nim, name, faculty, study_program, cohort_year, password_hash, role)
+		VALUES (?, ?, ?, ?, ?, ?, ?)
+	`
+
+	_, err := r.db.ExecContext(ctx, query,
+		student.NIM,
+		student.Name,
+		student.Faculty,
+		student.StudyProgram,
+		student.CohortYear,
+		passwordHash,
+		student.Role,
+	)
+	if err != nil {
+		return fmt.Errorf("error creating student: %w", err)
+	}
+
+	return nil
+}
+
+// UpdatePassword updates the password hash for a given student NIM.
+func (r *userRepository) UpdatePassword(ctx context.Context, nim, passwordHash string) error {
+	query := `UPDATE students SET password_hash = ? WHERE nim = ?`
+
+	result, err := r.db.ExecContext(ctx, query, passwordHash, nim)
+	if err != nil {
+		return fmt.Errorf("error updating password: %w", err)
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return fmt.Errorf("error checking rows affected: %w", err)
+	}
+	if rowsAffected == 0 {
+		return fmt.Errorf("student with NIM %s not found", nim)
+	}
+
+	return nil
+}

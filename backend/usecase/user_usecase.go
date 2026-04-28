@@ -3,6 +3,7 @@ package usecase
 import (
 	"context"
 	"fmt"
+	"golang.org/x/crypto/bcrypt"
 
 	"kontrak-matkul/domain"
 )
@@ -39,4 +40,45 @@ func (u *userUsecase) GetAllStudents(ctx context.Context) ([]domain.Student, err
 	}
 
 	return students, nil
+}
+
+// CreateStudent hashes the password and saves the student.
+func (u *userUsecase) CreateStudent(ctx context.Context, student *domain.Student, rawPassword string) error {
+	if student.NIM == "" || student.Name == "" {
+		return fmt.Errorf("NIM and Name cannot be empty")
+	}
+
+	hash, err := bcrypt.GenerateFromPassword([]byte(rawPassword), bcrypt.DefaultCost)
+	if err != nil {
+		return fmt.Errorf("error hashing password: %w", err)
+	}
+
+	student.Role = "Student" // force role
+
+	if err := u.userRepo.CreateStudent(ctx, student, string(hash)); err != nil {
+		return fmt.Errorf("CreateStudent: %w", err)
+	}
+
+	return nil
+}
+
+// ResetPassword hashes the new password and updates it.
+func (u *userUsecase) ResetPassword(ctx context.Context, nim, newRawPassword string) error {
+	if nim == "" {
+		return fmt.Errorf("NIM cannot be empty")
+	}
+	if newRawPassword == "" {
+		return fmt.Errorf("new password cannot be empty")
+	}
+
+	hash, err := bcrypt.GenerateFromPassword([]byte(newRawPassword), bcrypt.DefaultCost)
+	if err != nil {
+		return fmt.Errorf("error hashing password: %w", err)
+	}
+
+	if err := u.userRepo.UpdatePassword(ctx, nim, string(hash)); err != nil {
+		return fmt.Errorf("ResetPassword: %w", err)
+	}
+
+	return nil
 }

@@ -96,6 +96,8 @@ func main() {
 		deliveryhttp.AuthMiddleware(authUC, "Admin")(adminHandler.CreateStudentHandler))
 	mux.HandleFunc("DELETE /api/v1/admin/students/{id}",
 		deliveryhttp.AuthMiddleware(authUC, "Admin")(adminHandler.DeleteStudentHandler))
+	mux.HandleFunc("POST /api/v1/admin/students/{nim}/reset-password",
+		deliveryhttp.AuthMiddleware(authUC, "Admin")(adminHandler.ResetStudentPasswordHandler))
 	mux.HandleFunc("GET /api/v1/admin/contract-period",
 		deliveryhttp.AuthMiddleware(authUC, "Admin")(adminHandler.GetContractPeriodHandler))
 	mux.HandleFunc("PUT /api/v1/admin/contract-period",

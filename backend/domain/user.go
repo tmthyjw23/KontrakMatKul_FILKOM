@@ -21,6 +21,8 @@ type UserRepository interface {
 	// The hash is intentionally NOT a field on the Student struct to prevent
 	// it from being accidentally serialized into JSON API responses.
 	GetPasswordHashByNIM(ctx context.Context, nim string) (string, error)
+	CreateStudent(ctx context.Context, student *Student, passwordHash string) error
+	UpdatePassword(ctx context.Context, nim, passwordHash string) error
 }
 
 // UserUsecase defines the contract for User business logic operations.
@@ -28,4 +30,6 @@ type UserRepository interface {
 type UserUsecase interface {
 	GetProfile(ctx context.Context, nim string) (*Student, error)
 	GetAllStudents(ctx context.Context) ([]Student, error)
+	CreateStudent(ctx context.Context, student *Student, rawPassword string) error
+	ResetPassword(ctx context.Context, nim, newRawPassword string) error
 }

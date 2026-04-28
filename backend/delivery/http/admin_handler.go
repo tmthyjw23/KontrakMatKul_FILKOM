@@ -134,12 +134,43 @@ func (h *AdminHandler) RejectRegistrationHandler(w http.ResponseWriter, r *http.
 
 // CreateStudentHandler handles POST /api/v1/admin/students
 func (h *AdminHandler) CreateStudentHandler(w http.ResponseWriter, r *http.Request) {
-	var student map[string]any
-	if err := json.NewDecoder(r.Body).Decode(&student); err != nil {
+	var body struct {
+		NIM          string `json:"nim"`
+		Name         string `json:"name"`
+		Password     string `json:"password"`
+		Faculty      string `json:"faculty"`
+		StudyProgram string `json:"study_program"`
+		CohortYear   int    `json:"cohort_year"`
+	}
+
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 		writeJSON(w, http.StatusBadRequest, map[string]string{"error": "Invalid request body"})
 		return
 	}
-	// Stub response
+
+	student := &domain.Student{
+		NIM:          body.NIM,
+		Name:         body.Name,
+		Faculty:      body.Faculty,
+		StudyProgram: body.StudyProgram,
+		CohortYear:   body.CohortYear,
+	}
+
+	if student.Faculty == "" {
+		student.Faculty = "FILKOM"
+	}
+	if student.StudyProgram == "" {
+		student.StudyProgram = "Sistem Informasi"
+	}
+	if student.CohortYear == 0 {
+		student.CohortYear = 2026
+	}
+
+	if err := h.UserUsecase.CreateStudent(r.Context(), student, body.Password); err != nil {
+		writeJSON(w, http.StatusInternalServerError, map[string]string{"error": err.Error()})
+		return
+	}
+
 	writeJSON(w, http.StatusCreated, map[string]any{"message": "Student created", "student": student})
 }
 
@@ -148,6 +179,25 @@ func (h *AdminHandler) DeleteStudentHandler(w http.ResponseWriter, r *http.Reque
 	id := r.PathValue("id")
 	// Stub response
 	writeJSON(w, http.StatusOK, map[string]string{"message": "Student " + id + " deleted"})
+}
+
+// ResetStudentPasswordHandler handles POST /api/v1/admin/students/{nim}/reset-password
+func (h *AdminHandler) ResetStudentPasswordHandler(w http.ResponseWriter, r *http.Request) {
+	nim := r.PathValue("nim")
+	var body struct {
+		Password string `json:"password"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": "Invalid request body"})
+		return
+	}
+
+	if err := h.UserUsecase.ResetPassword(r.Context(), nim, body.Password); err != nil {
+		writeJSON(w, http.StatusInternalServerError, map[string]string{"error": err.Error()})
+		return
+	}
+
+	writeJSON(w, http.StatusOK, map[string]string{"message": "Password reset successful"})
 }
 
 // GetContractPeriodHandler handles GET /api/v1/admin/contract-period
