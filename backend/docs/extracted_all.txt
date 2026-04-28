@@ -1,0 +1,365 @@
+
+
+================================================================================
+FILE: Kurikulum FILKOM ALL PRODI - INFORMATIKA.pdf
+================================================================================
+Total pages: 3
+
+--- PAGE 1 ---
+KURIKULUM PROGRAM STUDI INFORMATIKA 2024
+PROGRAM STUDI INFORMATIKA
+FAKULTAS ILMU KOMPUTER
+No. Code Name ATL Credit(s) Type Prerequisite
+1 MATH000 Matematika/ Mathematics 2 Pre-requisite
+2 COPS000 Keterampilan Komputer Dasar/ Basic Computer Skill 3 Pre-requisite
+3 WEDU001 Pendidikan Keterampilan/ Work Education 1 Pre-requisite
+4 BIU000 Bahasa Inggris Pemula/ Basic English 3 Pre-requisite
+5 LMTR999 Mata Kuliah Pembatas/ Limiter Subject 1 Pre-requisite
+Semester 1
+No. Code Name Credit(s) Type Prerequisite
+1 FILG181 Teladan Kehidupan I/ The Exemplary Living I 2 General
+2 GEN001 Bahasa Inggris Dasar I/ Elementary English I 3 General p
+3 IF1111 Pengantar Komputer/ Introduction to Computing a 3 Basic
+4 IS1113 Pemrograman Komputer/ Computer Programming a 6 Major
+5 IF1112 Dasar Aljabar Linear/ Aljabar Linear Fundamental 3 Basic
+6 BIU101 Bahasa Inggris Pra Dasar/ Pre-Elementary English 3 General - [BIU000] Bahasa Inggris Pemula/ Basic English - 3 credit(s)
+Semester 2
+No. Code Name Credit(s) Type Prerequisite
+3 FILG182 Teladan Kehidupan II/ The Exemplary Living II 2 General - [FILG181] Teladan Kehidupan I/ The Exemplary Living I - 2 credit(s)
+4 IS1221 Matematika Diskrit/ Discrete Mathematics 3 Basic - [MATH000] Matematika/ Mathematics - 2 credit(s)
+5 IF1222 Kalkulus/ Calculus 3 Basic - [MATH000] Matematika/ Mathematics - 2 credit(s)
+6 IF1223 Logika Informatika/ Informatics Logic 3 Major - [IF1111] Pengantar Komputer/ Introduction to Computing - 3 credit(s)
+7 IS1224 Struktur Data dan Algoritma/ Data Structure and Algorithms a 3 Major - [IS1113] Pemrograman Komputer/ Computer Programming - 6 credit(s)
+8 BIU102 Bahasa Inggris Dasar/ Elementary English 3 General - [BIU101] Bahasa Inggris Pra Dasar/ Pre-Elementary English - 3 credit(s)
+10 EDU112 Filsafat Pendidikan Kristen/ Philosophy of Christian Education 2 General
+Semester 3
+No. Code Name Credit(s) Type Prerequisite
+- [GEN002] Bahasa Inggris Dasar II/ Elementary English II - 3 credit(s)
+1 GEN101 Bahasa Inggris Pra Menengah I / Pre-Inter English I 3 General - [LMTR999] Mata Kuliah Pembatas/ Limiter Subject - 1 credit(s)
+2 FILG283 Prinsip-Prinsip Nilai Kristiani/ The Principles of Christian Values 2 General - [FILG182] Teladan Kehidupan II/ The Exemplary Living II - 2 credit(s)
+3 PPKN101 Pendidikan Kewarganegaraan/ Indonesian Civics 3 General
+- [IF1223] Logika Informatika/ Informatics Logic - 3 credit(s)
+4 IF2131 Organisasi dan Arsitektur Komputer/ Computer Organization and Architecture 3 Major - [IF1111] Pengantar Komputer/ Introduction to Computing - 3 credit(s)
+5 IS2133 Pengantar Basisdata/ Introduction to Database a 3 Major - [IF1111] Pengantar Komputer/ Introduction to Computing - 3 credit(s)
+6 IS2134 Statistik dan Probabilitas/ Statistics and Probability 3 Major - [MATH000] Matematika/ Mathematics - 2 credit(s)
+7 IS2132 Perancangan Web/ Web Design 3 Major - [IS1224] Struktur Data dan Algoritma/ Data Structure and Algorithms - 3 credit(s)
+8 BIU203 Bahasa Inggris Pra Menengah I / Pre-Intermediate English I 3 General - [BIU102] Bahasa Inggris Dasar/ Elementary English - 3 credit(s)
+9 BIU203 Bahasa Inggris Pra Menengah I / Pre-Intermediate English I 3 General - [GEN002] Bahasa Inggris Dasar II/ Elementary English II - 3 credit(s)
+Semester 4
+No. Code Name Credit(s) Type Prerequisite
+- [GEN101] Bahasa Inggris Pra Menengah I / Pre-Inter English I - 3 credit(s)
+1 GEN102 Bahasa Inggris Pra Menengah II/ Pre-Inter English II 3 General - [LMTR999] Mata Kuliah Pembatas/ Limiter Subject - 1 credit(s)
+2 FILG284 Orang Muda dan Dunia/ Youth and the World 2 General - [FILG283] Prinsip-Prinsip Nilai Kristiani/ The Principles of Christian Values - 2 credit(s)
+3 IF2243 Jaringan Komputer I/ Computer Network I 3 Major - [IF2131] Organisasi dan Arsitektur Komputer/ Computer Organization and Architecture - 3 credit(s)
+- [MATH000] Matematika/ Mathematics - 2 credit(s)
+4 IF2244 Sistem Cerdas/ Expert System 3 Major - [IS1221] Matematika Diskrit/ Discrete Mathematics - 3 credit(s)
+5 IF2245 Teori Bahasa dan Automata/ Language and Automata Theory 3 Major - [IS1221] Matematika Diskrit/ Discrete Mathematics - 3 credit(s)
+
+--- PAGE 2 ---
+6 IS2241 Sistem Manajemen Basisdata/ Database Management System 3 Major - [IS2133] Pengantar Basisdata/ Introduction to Database - 3 credit(s)
+7 IS2243 Pemrograman Berorientasi Objek/ Object Oriented Programming 3 Major - [IS1113] Pemrograman Komputer/ Computer Programming - 6 credit(s)
+8 BIU204 Bahasa Inggris Pra Menengah II/ Pre-Intermediate English II 3 General - [BIU203] Bahasa Inggris Pra Menengah I / Pre-Intermediate English I - 3 credit(s)
+9 BIU204 Bahasa Inggris Pra Menengah II/ Pre-Intermediate English II 3 General - [GEN101] Bahasa Inggris Pra Menengah I / Pre-Inter English I - 3 credit(s)
+Semester 5
+No. Code Name Credit(s) Type Prerequisite
+1 FILG385 Kehidupan Keluarga / Family Living 2 General - [FILG284] Orang Muda dan Dunia/ Youth and the World - 2 credit(s)
+2 IF3156 Jaringan Komputer II/ Computer Network II 3 Major - [IF2243] Jaringan Komputer I/ Computer Network I - 3 credit(s)
+3 IF3155 Pemrograman Visual/ Visual Programming 3 Major - [IS2243] Pemrograman Berorientasi Objek/ Object Oriented Programming - 3 credit(s)
+4 IS3151 Pengembangan Web Front-End/ Front-End Web Development 3 Major - [IS2243] Pemrograman Berorientasi Objek/ Object Oriented Programming - 3 credit(s)
+5 IS3152 Analisis dan Perancangan Sistem/ System Analysis and Design 3 Major - [IS1113] Pemrograman Komputer/ Computer Programming - 6 credit(s)
+6 IF3153 Konsep Sistem Operasi/ Operating System Concept 3 Major - [IF2131] Organisasi dan Arsitektur Komputer/ Computer Organization and Architecture - 3 credit(s)
+7 IS3262 Interaksi Manusia dan Komputer/ Human and Computer Interaction 3 Major - [IS2243] Pemrograman Berorientasi Objek/ Object Oriented Programming - 3 credit(s)
+Semester 6
+No. Code Name Credit(s) Type Prerequisite
+1 FILG386 Kehidupan di Akhir Zaman/ End Time Living 2 General - [FILG385] Kehidupan Keluarga / Family Living - 2 credit(s)
+2 IF3266 Grafika Komputer/ Computer Graphics 3 Major - [IS2243] Pemrograman Berorientasi Objek/ Object Oriented Programming - 3 credit(s)
+3 IF3262 Pengembangan Web Back-End/ Back-End Web Development 3 Major - [IS3151] Pengembangan Web Front-End/ Front-End Web Development - 3 credit(s)
+- [IF2244] Sistem Cerdas/ Expert System - 3 credit(s)
+4 IF3263 Kecerdasan Buatan/ Artificial Intelligence 3 Major - [IS1224] Struktur Data dan Algoritma/ Data Structure and Algorithms - 3 credit(s)
+- [IS3152] Analisis dan Perancangan Sistem/ System Analysis and Design - 3 credit(s)
+5 IF3264 Rekayasa Perangkat Lunak/ Software Engineering 3 Major - [IS3262] Interaksi Manusia dan Komputer/ Human and Computer Interaction - 3 credit(s)
+6 IS3261 Pengembangan Perangkat Bergerak/ Mobile Application Development 3 Major - [IS3262] Interaksi Manusia dan Komputer/ Human and Computer Interaction - 3 credit(s)
+- [IS3152] Analisis dan Perancangan Sistem/ System Analysis and Design - 3 credit(s)
+7 IS3265 Metodologi Penelitian/ Research Method 3 Major - [IS2134] Statistik dan Probabilitas/ Statistics and Probability - 3 credit(s)
+Semester 7
+No. Code Name Credit(s) Type Prerequisite
+- [IS3265] Metodologi Penelitian/ Research Method - 3 credit(s)
+1 IS4171 Skripsi I/ Research Project I 3 Major - [IF3264] Rekayasa Perangkat Lunak/ Software Engineering - 3 credit(s)
+2 IS2245 Penulisan Ilmiah/ Scientific Writing 2 Major - [IS2133] Pengantar Basisdata/ Introduction to Database - 3 credit(s)
+3 IF4172 Pengantar Pengembangan Game/ Introduction to Game Development 3 Major - [IF3155] Pemrograman Visual/ Visual Programming - 3 credit(s)
+- [IF1223] Logika Informatika/ Informatics Logic - 3 credit(s)
+4 IF4173 Pemrograman Sistem/ System Programming 3 Major - [IF2131] Organisasi dan Arsitektur Komputer/ Computer Organization and Architecture - 3 credit(s)
+Semester 8
+No. Code Name Credit(s) Type Prerequisite
+1 IS4281 Skripsi II/ Research Project II 3 Major - [IS4171] Skripsi I/ Research Project I - 3 credit(s)
+- [IF2131] Organisasi dan Arsitektur Komputer/ Computer Organization and Architecture - 3 credit(s)
+2 IF4282 Robotika/ Robotics 3 Major - [IF1223] Logika Informatika/ Informatics Logic - 3 credit(s)
+3 IS2242 Kewirausahaan/ Entrepreneur - Project Capstone 3 Major - [IF3264] Rekayasa Perangkat Lunak/ Software Engineering - 3 credit(s)
+- [IF1111] Pengantar Komputer/ Introduction to Computing - 3 credit(s)
+4 IF4174 Etika Komputer/ Computer Ethics 2 Major - [IF2244] Sistem Cerdas/ Expert System - 3 credit(s)
+Semester 9
+No. Code Name Credit(s) Type Prerequisite
+1 IF4291 Desain untuk Visualisasi dan Komputer/ Design for Visualization and Communication 3 Elective - [IF4172] Pengantar Pengembangan Game/ Introduction to Game Development - 3 credit(s)
+2 IF4292 Pemrograman Game/ Game Programming 3 Elective - [IF4172] Pengantar Pengembangan Game/ Introduction to Game Development - 3 credit(s)
+3 IF4191 Pengantar Animasi/ Introduction to Animation 3 Elective - [IF3266] Grafika Komputer/ Computer Graphics - 3 credit(s)
+4 IF4192 Prinsip-Prinsip Desain Kreatif/ Principles of Creative Design 3 Elective - [IF3266] Grafika Komputer/ Computer Graphics - 3 credit(s)
+5 IF4294 Pemrosesan Bahasa Alami/ Natural Language Processing 3 Elective - [IS3154] Penambangan dan Pergudangan Data/ Data Mining and Warehousing - 3 credit(s)
+6 IS3154 Penambangan dan Pergudangan Data/ Data Mining and Warehousing 3 Elective - [IS2241] Sistem Manajemen Basisdata/ Database Management System - 3 credit(s)
+7 IF4293 Pembelajaran Mesin/ Machine Learning 3 Elective - [IF3263] Kecerdasan Buatan/ Artificial Intelligence - 3 credit(s)
+8 IF4194 Pencarian Informasi/ Information Retrieval 3 Elective - [IS3154] Penambangan dan Pergudangan Data/ Data Mining and Warehousing - 3 credit(s)
+
+--- PAGE 3 ---
+9 IF4195 Manajemen Proyek/ Project Management 3 Elective - [IF3262] Pengembangan Web Back-End/ Back-End Web Development - 3 credit(s)
+10 IF4196 Internet untuk Segala/ Internet of Things 3 Elective - [IF3262] Pengembangan Web Back-End/ Back-End Web Development - 3 credit(s)
+11 IF4295 Teknik Cloud/ Cloud Engineering 3 Elective - [IF3262] Pengembangan Web Back-End/ Back-End Web Development - 3 credit(s)
+12 IF4296 Rekayasa DevOps/ DevOps Engineering 3 Elective - [IF3262] Pengembangan Web Back-End/ Back-End Web Development - 3 credit(s)
+13 CNET402 Jaringan Nirkabel dan Perangkat Bergerak/ Wireless and Mobile Networks 3 Elective
+14 BENG310 Bahasa Inggris Bisnis Membaca dan Kosakata/ Business English Reading and Vocabulary3 Elective - [GEN102] Bahasa Inggris Pra Menengah II/ Pre-Inter English II - 3 credit(s)
+15 BENG330 Komunikasi Bisnis Bahasa Inggris/ Business English Communication 3 Elective - [GEN102] Bahasa Inggris Pra Menengah II/ Pre-Inter English II - 3 credit(s)
+16 BBEN320 Korespondensi Bisnis Bahasa Inggris/ Business English Correspondence 3 Elective - [GEN102] Bahasa Inggris Pra Menengah II/ Pre-Inter English II - 3 credit(s)
+17 ELIT271 Studi Literatur I/ Literature Studies I 3 Elective - [GEN102] Bahasa Inggris Pra Menengah II/ Pre-Inter English II - 3 credit(s)
+18 BIU305 Bahasa Inggris Menengah I/ Intermediate English I 3 Elective - [BIU204] Bahasa Inggris Pra Menengah II/ Pre-Intermediate English II - 3 credit(s)
+19 BIU305 Bahasa Inggris Menengah I/ Intermediate English I 3 Elective - [GEN102] Bahasa Inggris Pra Menengah II/ Pre-Inter English II - 3 credit(s)
+20 BIU306 Bahasa Inggris Menengah II/ Intermediate English II 3 Elective - [BIU204] Bahasa Inggris Pra Menengah II/ Pre-Intermediate English II - 3 credit(s)
+- [GEN102] Bahasa Inggris Pra Menengah II/ Pre-Inter English II - 3 credit(s)
+21 GEN306 Bahasa Inggris Menengah Atas II/ Upper-Inter English II 3 Elective - [LMTR999] Mata Kuliah Pembatas/ Limiter Subject - 1 credit(s)
+22 ESP401 Bahasa Inggris Bisnis Membaca dan Kosakata/ Business English Reading and Vocabulary3 Elective - [BIU204] Bahasa Inggris Pra Menengah II/ Pre-Intermediate English II - 3 credit(s)
+23 ESP401 Bahasa Inggris Bisnis Membaca dan Kosakata/ Business English Reading and Vocabulary3 Elective - [GEN102] Bahasa Inggris Pra Menengah II/ Pre-Inter English II - 3 credit(s)
+24 ESP402 Korespondensi Bisnis Bahasa Inggris/ Business English Correspondence 3 Elective - [BIU204] Bahasa Inggris Pra Menengah II/ Pre-Intermediate English II - 3 credit(s)
+25 ESP402 Korespondensi Bisnis Bahasa Inggris/ Business English Correspondence 3 Elective - [GEN102] Bahasa Inggris Pra Menengah II/ Pre-Inter English II - 3 credit(s)
+26 ESP403 Komunikasi Bisnis Bahasa Inggris/ Business English Communication 3 Elective - [BIU204] Bahasa Inggris Pra Menengah II/ Pre-Intermediate English II - 3 credit(s)
+27 ESP403 Komunikasi Bisnis Bahasa Inggris/ Business English Communication 3 Elective - [GEN102] Bahasa Inggris Pra Menengah II/ Pre-Inter English II - 3 credit(s)
+28 ENG433 Penulisan Akademik Bahasa Inggris III/ Academic English Writing III 3 Elective - [BIU204] Bahasa Inggris Pra Menengah II/ Pre-Intermediate English II - 3 credit(s)
+29 BIU306 Bahasa Inggris Menengah II/ Intermediate English II 3 General - [GEN102] Bahasa Inggris Pra Menengah II/ Pre-Inter English II - 3 credit(s)
+30 ENG433 Penulisan Akademik Bahasa Inggris III/ Academic English Writing III 3 General - [GEN102] Bahasa Inggris Pra Menengah II/ Pre-Inter English II - 3 credit(s)
+31 MG4191 Pengalaman Kerja di Industri Teknologi Informasi/ Industrial Experience in Information Tec8hnology Elective
+32 MG4192 Pengalaman Praktek di Bidang Teknologi Informasi/ Information Technology Practice in In8dustrial ExperiencEelective
+33 MG4193 Pengembangan profesional di Industri Teknologi InformasiDevelopment in Information Tec4hnology Industry/E Plercotifveessional Development in Information Technology Industry
+34 SI42901 Mata Kuliah Pilihan untuk Studi Independen 1/ Elective Course for Specific Independent S8tudy 1/ Elective
+35 SI42902 Mata Kuliah Pilihan untuk Studi Independen 2/ Elective Course for Specific Independent S8tudy 2 Elective
+36 SI42903 Mata Kuliah Pilihan untuk Studi Independen 3/ Elective Course for Specific Independent S4tudy 3 Elective
+37 SI42905 Mata Kuliah Pilihan untuk Studi Independen 5/ Elective Course for Specific Independent S3tudy 5 Elective
+38 SI42904 Mata Kuliah Pilihan untuk Studi Independen 4/ Elective Course for Specific Independent S4tudy 4 Elective
+39 SI42906 Mata Kuliah Pilihan untuk Studi Independen 6/ Elective Course for Specific Independent S3tudy 6 Elective
+40 SI42907 Mata Kuliah Pilihan untuk Studi Independen 7/ Elective Course for Specific Independent S3tudy 7 Elective
+41 SI42908 Mata Kuliah Pilihan untuk Studi Independen 8/ Elective Course for Specific Independent S2tudy 8 Elective
+42 SI42909 Mata Kuliah Pilihan untuk Studi Independen 9/ Elective Course for Specific Independent S2tudy 9 Elective
+43 SI42910 Mata Kuliah Pilihan untuk Studi Independen 10/ Elective Course for Specific Independent S1tudy 10 Elective
+44 SI42911 Mata Kuliah Pilihan untuk Studi Independen 11/ Elective Course for Specific Independent S1tudy 11 Elective
+45 SI42912 Mata Kuliah Pilihan untuk Studi Independen 12/ Elective Course for Specific Independent S20tudy 12 Elective
+
+
+
+================================================================================
+FILE: Kurikulum FILKOM ALL PRODI - SISTEM INFORMASI 2020.pdf
+================================================================================
+Total pages: 3
+
+--- PAGE 1 ---
+KURIKULUM PRODI SISTEM INFORMASI 2020-2024
+Prerequisite
+No. Code Name Credit(s) Type Prerequisite
+1 WEDU001 Pendidikan Keterampilan/ Work Education 1 Pre-requisite
+2 MATH000 Matematika/ Mathematics 2 Pre-requisite
+3 COPS000 Keterampilan Komputer Dasar/ Basic Computer Skill 3 Pre-requisite
+4 BIU000 Bahasa Inggris Pemula/ Basic English 3 Pre-requisite
+Semester 1
+No. Code Name Credit(s) Type Prerequisite
+1 FILG181 Kehidupan Teladan Yesus I/ The Exemplary Living of Jesus I 2 General
+2 GEN001 Bahasa Inggris Dasar I/ Elementary English I 3 General
+3 IS1111 Dasar Infrastruktur IT/ Fundamental of IT Infrastructure 3 Basic
+4 IS1112 Manajemen Proses Bisnis/ Business Process Management 3 Basic
+5 IS1113 Pemrograman Komputer/ Computer Programming 6 Basic
+6 BIU101 Bahasa Inggris Pra Dasar/ Pre-Elementary English 3 General - [BIU000] Bahasa Inggris Pemula/ Basic English - 3 credit(s)
+Semester 2
+No. Code Name Credit(s) Type Prerequisite
+1 GEN002 Bahasa Inggris Dasar II/ Elementary English II 3 General - [GEN001] Bahasa Inggris Dasar I/ Elementary English I - 3 credit(s)
+2 PEND131 Filsafat Pendidikan Kristen/ Philosophy of Christian Education 2 General
+3 FILG182 Kehidupan Teladan II/ The Exemplary Living II 2 General - [FILG181] Kehidupan Teladan Yesus I/ The Exemplary Living of Jesus I - 2 credit(s)
+4 IS1221 Matematika Diskrit/ Discrete Mathematics 3 Major - [MATH000] Matematika/ Mathematics - 2 credit(s)
+5 IS1222 Pengantar Akuntansi Keuangan/ Introduction to Financial Accounting 3 Basic
+6 IS1223 Jaringan Komputer/ Computer Network 3 Basic - [IS1111] Dasar Infrastruktur IT/ Fundamental of IT Infrastructure - 3 credit(s)
+7 IS1224 Struktur Data dan Algoritma/ Data Structure and Algorithms 3 Major - [IS1113] Pemrograman Komputer/ Computer Programming - 6 credit(s)
+8 BIU102 Bahasa Inggris Dasar/ Elementary English 3 General - [BIU101] Bahasa Inggris Pra Dasar/ Pre-Elementary English - 3 credit(s)
+Semester 3
+No. Code Name Credit(s) Type Prerequisite
+1 GEN101 Bahasa Inggris Pra Menengah I / Pre-Inter English I 3 General - [GEN002] Bahasa Inggris Dasar II/ Elementary English II - 3 credit(s)
+2 FILG283 Dasar-Dasar Nilai Kristiani/ The Principles of Christian Values 2 General - [FILG182] Kehidupan Teladan II/ The Exemplary Living II - 2 credit(s)
+3 PPKN101 Pendidikan Kewarganegaraan/ Indonesian Civics 3 General
+- [IS1111] Dasar Infrastruktur IT/ Fundamental of IT Infrastructure - 3 credit(s)
+4 IS2131 Sistem Informasi Manajemen/ Management Information System 3 Major - [IS1112] Manajemen Proses Bisnis/ Business Process Management - 3 credit(s)
+5 IS2132 Perancangan Web/ Web Design 3 Major - [IS1113] Pemrograman Komputer/ Computer Programming - 6 credit(s)
+6 IS2133 Pengantar Basisdata/ Introduction to Database 3 Major - [IS1111] Dasar Infrastruktur IT/ Fundamental of IT Infrastructure - 3 credit(s)
+7 IS2134 Statistik dan Probabilitas/ Statistics and Probability 3 Basic - [IS1221] Matematika Diskrit/ Discrete Mathematics - 3 credit(s)
+8 BIU203 Bahasa Inggris Pra Menengah I / Pre-Intermediate English I 3 General - [BIU102] Bahasa Inggris Dasar/ Elementary English - 3 credit(s)
+Semester 4
+No. Code Name Credit(s) Type Prerequisite
+1 GEN102 Bahasa Inggris Pra Menengah II/ Pre-Inter English II 3 Major - [GEN101] Bahasa Inggris Pra Menengah I / Pre-Inter English I - 3 credit(s)
+2 FILG284 Pemuda dan Dunia/ Youth and the World 2 General - [FILG283] Dasar-Dasar Nilai Kristiani/ The Principles of Christian Values - 2 credit(s)
+3 IS2241 Sistem Manajemen Basisdata/ Database Management System 3 Major - [IS2133] Pengantar Basisdata/ Introduction to Database - 3 credit(s)
+4 IS2242 Kewirausahaan/ Entrepreneur - Project Capstone 3 Major - [IS1112] Manajemen Proses Bisnis/ Business Process Management - 3 credit(s)
+5 IS2243 Pemrograman Berorientasi Objek/ Object Oriented Programming 3 Major - [IS1113] Pemrograman Komputer/ Computer Programming - 6 credit(s)
+6 IS2244 Etika Komputer dan Profesi/ Computer Ethics and Profession 3 Major - [IS1111] Dasar Infrastruktur IT/ Fundamental of IT Infrastructure - 3 credit(s)
+7 IS2245 Penulisan Ilmiah/ Scientific Writing 2 Major - [IS1111] Dasar Infrastruktur IT/ Fundamental of IT Infrastructure - 3 credit(s)
+
+--- PAGE 2 ---
+8 BIU204 Bahasa Inggris Pra Menengah II/ Pre-Intermediate English II 3 General - [BIU203] Bahasa Inggris Pra Menengah I / Pre-Intermediate English I - 3 credit(s)
+Semester 5
+No. Code Name Credit(s) Type Prerequisite
+1 FILG385 Kehidupan Rumah Tangga/ Family Living 2 General - [FILG284] Pemuda dan Dunia/ Youth and the World - 2 credit(s)
+2 IS3151 Pengembangan Web Front-End/ Front-End Web Development 3 Major - [IS2132] Perancangan Web/ Web Design - 3 credit(s)
+- [IS1113] Pemrograman Komputer/ Computer Programming - 6 credit(s)
+3 IS3152 Analisis dan Perancangan Sistem/ System Analysis and Design 3 Major - [IS2131] Sistem Informasi Manajemen/ Management Information System - 3 credit(s)
+4 IS3153 Keamanan Sistem Informasi/ Information System Security 3 Major - [IS1223] Jaringan Komputer/ Computer Network - 3 credit(s)
+5 IS3154 Penambangan dan Pergudangan Data/ Data Mining and Warehousing 3 Major - [IS2241] Sistem Manajemen Basisdata/ Database Management System - 3 credit(s)
+- [IS1222] Pengantar Akuntansi Keuangan/ Introduction to Financial Accounting - 3 credit(s)
+6 IS3155 Rekayasa Proses Bisnis/ Business Process Reengineering 3 Major - [IS2131] Sistem Informasi Manajemen/ Management Information System - 3 credit(s)
+- [IS1112] Manajemen Proses Bisnis/ Business Process Management - 3 credit(s)
+7 IS3156 Bisnis Elektronik/ Electronic Business (E-Business) 3 Major - [IS2132] Perancangan Web/ Web Design - 3 credit(s)
+Semester 6
+No. Code Name Credit(s) Type Prerequisite
+1 FILG386 Hidup Akhir Zaman/ End Time Living 2 General - [FILG385] Kehidupan Rumah Tangga/ Family Living - 2 credit(s)
+2 IS3261 Pengembangan Perangkat Bergerak/ Mobile Application Development 3 Major - [IS2243] Pemrograman Berorientasi Objek/ Object Oriented Programming - 3 credit(s)
+3 IS3262 Interaksi Manusia dan Komputer/ Human and Computer Interaction 3 Major - [IS3152] Analisis dan Perancangan Sistem/ System Analysis and Design - 3 credit(s)
+4 IS3263 Visualisasi Data/ Data Visualization 3 Major - [IS2241] Sistem Manajemen Basisdata/ Database Management System - 3 credit(s)
+5 IS3264 Manajemen Proyek Teknologi Informasi/ Information Technology Project Management 3 Major - [IS3152] Analisis dan Perancangan Sistem/ System Analysis and Design - 3 credit(s)
+6 IS3265 Metodologi Penelitian/ Research Method 3 Basic - [IS2134] Statistik dan Probabilitas/ Statistics and Probability - 3 credit(s)
+7 IS3266 Kecerdasan dan Analisis Bisnis/ Business Intelligence and Analytics 3 Major - [IS3154] Penambangan dan Pergudangan Data/ Data Mining and Warehousing - 3 credit(s)
+Semester 7
+No. Code Name Credit(s) Type Prerequisite
+1 IS4171 Skripsi I/ Research Project I 3 Major - [IS3265] Metodologi Penelitian/ Research Method - 3 credit(s)
+2 IS4172 Perilaku Organisasi/ Organization Behavior 3 Major - [IS1112] Manajemen Proses Bisnis/ Business Process Management - 3 credit(s)
+3 IS4173 Manajemen Pengetahuan/ Knowledge Management 3 Major - [IS3154] Penambangan dan Pergudangan Data/ Data Mining and Warehousing - 3 credit(s)
+4 IS4174 Desain UI dan UX/ UI and UX Design 3 Major - [IS3262] Interaksi Manusia dan Komputer/ Human and Computer Interaction - 3 credit(s)
+5 IS4175 Pengelolaan Teknologi Informasi/ Information Technology Governance 3 Major - [IS3152] Analisis dan Perancangan Sistem/ System Analysis and Design - 3 credit(s)
+Semester 8
+No. Code Name Credit(s) Type Prerequisite
+1 IS4281 Skripsi II/ Research Project II 3 Major - [IS4171] Skripsi I/ Research Project I - 3 credit(s)
+- [IS1222] Pengantar Akuntansi Keuangan/ Introduction to Financial Accounting - 3 credit(s)
+2 IS4282 Audit Sistem Informasi/ Information System Audit 3 Major - [IS3153] Keamanan Sistem Informasi/ Information System Security - 3 credit(s)
+3 IS4283 Sistem Pendukung Keputusan/ Decision Support System 3 Major - [IS3154] Penambangan dan Pergudangan Data/ Data Mining and Warehousing - 3 credit(s)
+4 IS4284 Sistem Perencanaan Sumberdaya Perusahaan/ Enterprise Resource Planning System 3 Major - [IS3155] Rekayasa Proses Bisnis/ Business Process Reengineering - 3 credit(s)
+Semester 9
+No. Code Name Credit(s) Type Prerequisite
+1 IS4191 Manajemen Resiko/ Risk Management 3 Elective - [IS3153] Keamanan Sistem Informasi/ Information System Security - 3 credit(s)
+2 IS4192 Manajemen Layanan IT/ IT Service Management 3 Elective - [IS3155] Rekayasa Proses Bisnis/ Business Process Reengineering - 3 credit(s)
+3 IS4291 Manajemen Kelangsungan Bisnis/ Business Continuity Management 3 Elective - [IS2131] Sistem Informasi Manajemen/ Management Information System - 3 credit(s)
+4 IS4292 Manajemen Perubahan/ Change Management 3 Elective - [IS1112] Manajemen Proses Bisnis/ Business Process Management - 3 credit(s)
+5 IS4193 Strategi Pemasaran Digital/ Digital Marketing Strategies 3 Elective - [IS3261] Pengembangan Perangkat Bergerak/ Mobile Application Development - 3 credit(s)
+6 IS4194 Periklanan/ Advertising 3 Elective - [IS3156] Bisnis Elektronik/ Electronic Business (E-Business) - 3 credit(s)
+7 IS4293 Kampanye dan Analisis Sosial Media/ Social Media Campaign and Analytics 3 Elective - [IS3156] Bisnis Elektronik/ Electronic Business (E-Business) - 3 credit(s)
+8 IS4294 Monetasi Inovasi/ Monetizing Innovation 3 Elective - [IS2242] Kewirausahaan/ Entrepreneur - Project Capstone - 3 credit(s)
+9 IS4195 Inovasi dan Kewirausahaan/ Innovation and Entrepreneurship 3 Elective - [IS2242] Kewirausahaan/ Entrepreneur - Project Capstone - 3 credit(s)
+10 IS4196 Meluncurkan Usaha Baru/ Launching New Ventures 3 Elective - [IS2242] Kewirausahaan/ Entrepreneur - Project Capstone - 3 credit(s)
+11 IS4295 Strategi Pengembangan Bisnis/ Business Development Strategies 3 Elective - [IS2242] Kewirausahaan/ Entrepreneur - Project Capstone - 3 credit(s)
+
+--- PAGE 3 ---
+12 IS4296 Pemodalan Usaha/ Venture Capital 3 Elective - [IS2242] Kewirausahaan/ Entrepreneur - Project Capstone - 3 credit(s)
+13 BENG310 Bahasa Inggris Bisnis Membaca dan Kosakata/ Business English Reading and Vocabulary 3 Elective - [GEN102] Bahasa Inggris Pra Menengah II/ Pre-Inter English II - 3 credit(s)
+14 BENG320 Korespondensi Bisnis Bahasa Inggris/ Business English Correspondence 3 Elective - [GEN102] Bahasa Inggris Pra Menengah II/ Pre-Inter English II - 3 credit(s)
+15 BENG330 Komunikasi Bisnis Bahasa Inggris/ Business English Communication 3 Elective - [GEN102] Bahasa Inggris Pra Menengah II/ Pre-Inter English II - 3 credit(s)
+16 ELIT271 Studi Literatur I/ Literature Studies I 3 Elective - [GEN102] Bahasa Inggris Pra Menengah II/ Pre-Inter English II - 3 credit(s)
+17 BIU305 Bahasa Inggris Menengah I/ Intermediate English I 3 Elective - [BIU204] Bahasa Inggris Pra Menengah II/ Pre-Intermediate English II - 3 credit(s)
+18 BIU305 Bahasa Inggris Menengah I/ Intermediate English I 3 Elective - [GEN102] Bahasa Inggris Pra Menengah II/ Pre-Inter English II - 3 credit(s)
+19 BIU306 Bahasa Inggris Menengah II/ Intermediate English II 3 Elective - [BIU204] Bahasa Inggris Pra Menengah II/ Pre-Intermediate English II - 3 credit(s)
+20 BIU306 Bahasa Inggris Menengah II/ Intermediate English II 3 Elective - [GEN102] Bahasa Inggris Pra Menengah II/ Pre-Inter English II - 3 credit(s)
+21 ESP401 Bahasa Inggris Bisnis Membaca dan Kosakata/ Business English Reading and Vocabulary 3 Elective - [BIU204] Bahasa Inggris Pra Menengah II/ Pre-Intermediate English II - 3 credit(s)
+22 ESP401 Bahasa Inggris Bisnis Membaca dan Kosakata/ Business English Reading and Vocabulary 3 Elective - [GEN102] Bahasa Inggris Pra Menengah II/ Pre-Inter English II - 3 credit(s)
+23 ESP402 Korespondensi Bisnis Bahasa Inggris/ Business English Correspondence 3 Elective - [BIU204] Bahasa Inggris Pra Menengah II/ Pre-Intermediate English II - 3 credit(s)
+24 ESP402 Korespondensi Bisnis Bahasa Inggris/ Business English Correspondence 3 Elective - [GEN102] Bahasa Inggris Pra Menengah II/ Pre-Inter English II - 3 credit(s)
+25 ESP403 Komunikasi Bisnis Bahasa Inggris/ Business English Communication 3 Elective - [BIU204] Bahasa Inggris Pra Menengah II/ Pre-Intermediate English II - 3 credit(s)
+26 ESP403 Komunikasi Bisnis Bahasa Inggris/ Business English Communication 3 Elective - [GEN102] Bahasa Inggris Pra Menengah II/ Pre-Inter English II - 3 credit(s)
+27 ENG433 Penulisan Akademik Bahasa Inggris III/ Academic English Writing III 3 Elective
+
+
+
+================================================================================
+FILE: Kurikulum FILKOM ALL PRODI - TEKNOLOGI INFORMASI.pdf
+================================================================================
+Total pages: 2
+
+--- PAGE 1 ---
+KURIKULUM TEKNOLOGI INFORMASI 2023 MATA KULIAH PRASYARAT
+No. kode MK mata kuliah sks pre-requisite Kode MK Mata Kuliah SKS
+1 BEDW121 Beginning Drawing/ Menggambar dasar 3 SKKB121 Beginner Keyboarding/Mengetik Pemula 3
+2 DVCM111 D Vi e s s u a a i l n iz d a a tio la n m a V nd is u C a o li m sa m s u i n d i a c n a t K io o n munikasi/ Design in 3 BIU000 Basic English/Bahasa Inggris Pemula 3
+3 COPS121 Introduction to Computing/ Pengantar Komputer 3 WEDU001 Work Education 1
+4 IND201 Indonesian Language/ Bahasa Indonesia 2
+SEMESTER I
+5 ICGT162 I T n e t k ro n d o u lo c g ti i o K n o t m o p C u o t m er p G ut r e a r f i G k raphic Technology/ Pengantar 3
+6 FILG181 Teladan Kehidupan I/ The Exemplary Living I 2
+7 BIU101 Bahasa Inggris Pra Dasar/ Pre-Elementary English 3 BIU000
+8 WEDU001 Pendidikan Keterampilan/ Work Education 1
+TOTAL 20
+No. kode MK mata kuliah sks pre-requisite
+1 CIV201 Indonesian Civics/ Pendidikan Kewarganegaraan 2
+2 SKVC112 S M k e e n t g ch g i a n m g b in a r V S is k u e a ts liz a a d ti a o l n a m an V d i s C u o a m lis m a u si n d ic a a n ti o K n o / m unikasi 3 BEDW121
+SEMESTER II 3 MATH173 Discrete Mathematics/ Matematika Diskrit 2 COPS121
+4 SENG197 Computer Programming/ Pemrograman Komputer 6 COPS121
+5 BIU102 Elementary English/ Bahasa Inggris Dasar 3 BIU101
+6 FILG182 The Exemplary Living II/ Teladan Kehidupan II 2 FILG181
+TOTAL 18
+kode MK mata kuliah sks pre-requisite
+1 RAVE251 D D i i g g i i t t a a l l I R m a a s g te in r g d a R n a s V t e e k r t a o n r d Vector/ Pengolahan Citra 3 BEDW121
+2 ILVC213 I V ll i u s s u t a ra l t d in a g n f K o o r m Vi u s n u i a k l a a s n i d Communication/ Ilustrasi untuk 3 DVCM111
+3 PPKN121 Civic/ Pancasila 2
+SEMESTER III 4 GEVC122 G M e o o d m el e G tr e y o M m o e d tr e i l u fo n r tu V k i s V u is a u liz a a lis ti a o s n i a d n a d n C K o o m m m un u i n ka ic s a i tion/ 3 SKCV112
+5 EDU112 P K h ris ilo te s n ophy of Christian Education/ Filsafat Pendidikan 2
+6 BIU203 B I ahasa Inggris Pra Menengah I / Pre-Intermediate English 3 BIU102
+7 FILG283 P Va ri l n u s e i s p-Prinsip Nilai Kristiani/ The Principles of Christian 2 FILG182
+TOTAL 18
+kode MK mata kuliah sks pre-requisite
+1 ANIM223 Introduction to Animation/ Pengantar Animasi 3 SKVC112, ILVC213, GEVC122
+2 PRCR214 P K r r i e n a c t i i p f les of Creative Design/ Prinsip-prinsip Desain 3 ILVC213
+3 DIPA271 D di i g g i i t t a a l l Painting And Coloring/ Pengecatan dan Pewarnaan 3 ILVC213
+SEMESTER IV 4 IMUL 352 F da u s n a d r a D m e e s n a ta in ls M o u f l I t n im te e r d a i c a t iv In e t e M ra u k lt t i i m f edia Design/ Dasar- 3 DVCM111
+5 SENG291 O O b b j j e e c k t Oriented Programming/ Pemrograman Berorientasi 3 SENG197
+6 BIU204 B II ahasa Inggris Pra Menengah II/ Pre-Intermediate English 3 BIU203
+7 FILG284 Orang Muda dan Dunia/ Youth and the World 2 FILG283
+TOTAL 20
+kode MK mata kuliah sks pre-requisite
+1 ANIM324 M da o la tio m n A G n r i a m p a h s ic i K in o m Co p m ut p e u r ter Animation/ Grafik Gerak 3 ANIM223, DIPA271
+2 MARK264 Digital Marketing/ Pemasaran Digital 3 IMUL352
+3 STOR315 S pr t o o d ry u b k o s a i rding Preproduction/ Papan Alur Cerita Pre- 3 ANIM223, PRCR214
+SEMESTER V 4 CSAR331 Web Design/ Perancangan Web 3 SENG291
+5 CTMS331 Content Management System/ Sistem Manajemen Konten 3 SENG291
+6 COGR353 C Ko o m m p p u u t t e e r r I Graphic Development I/ Pengembangan Grafika 3 SENG291 a
+7 FILG385 Kehidupan Keluarga / Family Living 2 FILG284
+TOTAL 20
+kode MK mata kuliah sks pre-requisite
+1 SENG331 I I n n t t e e r r a a k c s tio i M n anusia dan Komputer/ Human Computer 3 SENG291
+2 VIRE325 I P n e tr n o g d a u n c t t a io r n R t e o a V lit i a rt s u a V l ir R tu e a a l l i d ty a n a n A d u A gm ug e m nt e e n d ted Reality/ 3 ANIM324
+3 PRAN325 P A r n o im du a c s t i i o K n o m fo p r u C t o e m r puter Animation/ Produksi untuk 3 ANIM324, DIPA271, STOR315
+SEMESTER VI 4 Electives 3
+5 VISA327 V A i n s i u m a a l s E i f d fe a c la ts m a F nd ilm Animation in Film/ Efek Visual dan 3 ANIM324, STOR315
+6 COGR354 C G o ra m fi p ka u t K er o G m r p a u p t h e i r c I I Development II/ Pengembangan 3 COGR353
+7 FILG386 Kehidupan di Akhir Zaman/ End Time Living 2 FILG385
+TOTAL 20
+kode MK mata kuliah sks pre-requisite
+1 DIVA455 Digital Video and Audio/ Video dan Audio Digital 3 PRAN325
+2 PRJC415 P M r a o n je a c je t m M e a n n a P g r e o m ye e k n d t a in la v m is u p a ro l d d u e k s s ig i n d e p s ro a d in u c v t is io u n a / l 3 PRAN325
+3 DIGR428 L p i e g n h c ti a n h g a R ya e a n n d e d r a i l n a m C o A m ni p m u a te s r i A K n o i m m p a u ti t o e n r / Render 3 VISA327
+SEMESTER VII 4 ADPI456 A D d ig v i a ta n l c L e a d n j D u i t g a i n tal Picture Illustration/ Ilustrasi Gambar 3 VIRE325, VISA327
+5 Electives 3
+6 PRJT416 C G o ra m fi p ka u t K er o G m r p a u p t h e i r cs Production Project I/Proyek I Produksi 3 PRAN325
+7 TECH465 Technopreneurship/ Teknologi Wirausaha 2 MARK264
+TOTAL 20
+kode MK mata kuliah sks pre-requisite
+1 PRJT417 C Pr o o m d p u u ks te i r G G ra ra fik p a h i K cs o m Pr p o u d t u e c r tion Project II /Proyek II 3 PRJT416
+2 INFD415 Information Design/ Desain Informasi 3 ADPI456
+SEMESTER VIII
+
+--- PAGE 2 ---
+SEMESTER VIII
+3 MOBA441 M M o o b b i i l l e e Application Development/ Pengembangan Aplikasi 3 SENG291, PRJC415
+4 GAME432 Game Programming/ Pemrograman Game 3 SENG291, PRJC415
+5 Elective 3
+TOTAL 15
+TOTAL SKS 151
+kode MK mata kuliah sks pre-requisite
+1 VASR367 Value Added Service/ Layanan Nilai Tambah 3 MARK264 Genap
+2 PHOT472 Photography/ Fotografi 3 VIRE325 Ganji
+ELECTIVES 3 DSPR418 Product Design/ Desain Produk 3 PRAN325 Ganjil
+4 DTEC161 Discovering Technology/ Mengenal Teknologi 3 ICGT162 Genap
+5 MMCS263 M M a a s s s y a M ra e k d a ia t K a o n n d t e C m o p n o te r m er porary Society/ Media Massa dan 3 ICGT162 Genap
+
