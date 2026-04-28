@@ -185,7 +185,12 @@ function ContractPeriodContent() {
                   <button
                     onClick={handleSave}
                     disabled={isSaving}
-                    className="flex-1 rounded-lg border border-emerald-500/50 bg-emerald-500/20 px-6 py-3 font-medium text-emerald-100 transition hover:border-emerald-500 hover:bg-emerald-500/30 disabled:opacity-50"
+                    className={[
+                      "flex-1 rounded-lg border px-6 py-3 font-medium transition disabled:opacity-50",
+                      formData.is_open
+                        ? "border-emerald-500/50 bg-emerald-500/20 text-emerald-100 hover:border-emerald-500 hover:bg-emerald-500/30"
+                        : "border-red-500/50 bg-red-500/20 text-red-100 hover:border-red-500 hover:bg-red-500/30",
+                    ].join(" ")}
                   >
                     {isSaving ? "Saving..." : "Save Changes"}
                   </button>

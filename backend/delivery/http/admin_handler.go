@@ -13,14 +13,16 @@ type AdminHandler struct {
 	CourseUsecase       domain.CourseUsecase
 	UserUsecase         domain.UserUsecase
 	RegistrationUsecase domain.RegistrationUsecase
+	ContractPeriodUsecase domain.ContractPeriodUsecase
 }
 
 // NewAdminHandler creates a new AdminHandler with injected usecases.
-func NewAdminHandler(cu domain.CourseUsecase, uu domain.UserUsecase, ru domain.RegistrationUsecase) *AdminHandler {
+func NewAdminHandler(cu domain.CourseUsecase, uu domain.UserUsecase, ru domain.RegistrationUsecase, cpu domain.ContractPeriodUsecase) *AdminHandler {
 	return &AdminHandler{
-		CourseUsecase:       cu,
-		UserUsecase:         uu,
-		RegistrationUsecase: ru,
+		CourseUsecase:         cu,
+		UserUsecase:           uu,
+		RegistrationUsecase:   ru,
+		ContractPeriodUsecase: cpu,
 	}
 }
 
@@ -226,21 +228,39 @@ func (h *AdminHandler) ResetStudentPasswordHandler(w http.ResponseWriter, r *htt
 
 // GetContractPeriodHandler handles GET /api/v1/admin/contract-period
 func (h *AdminHandler) GetContractPeriodHandler(w http.ResponseWriter, r *http.Request) {
-	// Stub response - returning a mocked contract period
-	writeJSON(w, http.StatusOK, map[string]any{
-		"is_open":    true,
-		"start_date": "2026-01-01T00:00:00Z",
-		"end_date":   "2026-12-31T23:59:59Z",
-	})
+	p, err := h.ContractPeriodUsecase.GetCurrent(r.Context())
+	if err != nil {
+		writeJSON(w, http.StatusInternalServerError, map[string]string{"error": err.Error()})
+		return
+	}
+	if p == nil {
+		// Default if not found in DB
+		writeJSON(w, http.StatusOK, map[string]any{
+			"is_open":    true,
+			"start_date": "2026-01-01T00:00:00Z",
+			"end_date":   "2026-12-31T23:59:59Z",
+		})
+		return
+	}
+	writeJSON(w, http.StatusOK, p)
 }
 
 // UpdateContractPeriodHandler handles PUT /api/v1/admin/contract-period
 func (h *AdminHandler) UpdateContractPeriodHandler(w http.ResponseWriter, r *http.Request) {
-	var period map[string]any
-	if err := json.NewDecoder(r.Body).Decode(&period); err != nil {
+	var body struct {
+		IsOpen    bool   `json:"is_open"`
+		StartDate string `json:"start_date"`
+		EndDate   string `json:"end_date"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 		writeJSON(w, http.StatusBadRequest, map[string]string{"error": "Invalid request body"})
 		return
 	}
-	// Stub response
-	writeJSON(w, http.StatusOK, map[string]any{"message": "Contract period updated", "period": period})
+
+	if err := h.ContractPeriodUsecase.Update(r.Context(), body.IsOpen, body.StartDate, body.EndDate); err != nil {
+		writeJSON(w, http.StatusInternalServerError, map[string]string{"error": err.Error()})
+		return
+	}
+
+	writeJSON(w, http.StatusOK, map[string]any{"message": "Contract period updated successfully"})
 }

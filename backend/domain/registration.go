@@ -7,9 +7,10 @@ import (
 
 // Business Rule Errors
 var (
-	ErrMaxCreditsExceeded   = errors.New("Cannot register: Exceeds maximum limit of 24 SKS")
-	ErrScheduleConflict     = errors.New("Schedule conflict detected")
-	ErrPendingRegistration = errors.New("You have pending registrations. Please wait for admin approval.")
+	ErrMaxCreditsExceeded   = errors.New("cannot register: Exceeds maximum limit of 24 SKS")
+	ErrScheduleConflict     = errors.New("cannot register: Schedule conflict detected")
+	ErrPendingRegistration  = errors.New("cannot register: You have a pending registration that must be approved or rejected first")
+	ErrContractPeriodClosed = errors.New("cannot register: The contract period is currently closed")
 )
 
 // Registration represents a student's course registration record.

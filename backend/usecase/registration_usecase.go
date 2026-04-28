@@ -12,15 +12,17 @@ import (
 type registrationUsecase struct {
 	regRepo    domain.RegistrationRepository
 	courseRepo domain.CourseRepository
+	cpRepo     domain.ContractPeriodRepository
 }
 
 // NewRegistrationUsecase creates and returns a new registrationUsecase.
 // It takes both a registration and course repository to enforce business rules
 // (e.g., a student can only register for an existing course).
-func NewRegistrationUsecase(rr domain.RegistrationRepository, cr domain.CourseRepository) domain.RegistrationUsecase {
+func NewRegistrationUsecase(rr domain.RegistrationRepository, cr domain.CourseRepository, cpr domain.ContractPeriodRepository) domain.RegistrationUsecase {
 	return &registrationUsecase{
 		regRepo:    rr,
 		courseRepo: cr,
+		cpRepo:     cpr,
 	}
 }
 
@@ -55,6 +57,15 @@ func (u *registrationUsecase) RegisterCourse(ctx context.Context, nim, courseCod
 	}
 	if courseCode == "" {
 		return nil, fmt.Errorf("course code cannot be empty")
+	}
+
+	// 0. Ensure Contract Period is OPEN
+	period, err := u.cpRepo.Get(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("RegisterCourse: error checking contract period: %w", err)
+	}
+	if period != nil && !period.IsOpen {
+		return nil, domain.ErrContractPeriodClosed
 	}
 
 	// 1. Ensure the new course exists
@@ -149,6 +160,15 @@ func (u *registrationUsecase) BulkRegisterCourse(ctx context.Context, nim string
 	}
 	if len(courseCodes) == 0 {
 		return nil, fmt.Errorf("no course codes provided")
+	}
+
+	// 0. Ensure Contract Period is OPEN
+	period, err := u.cpRepo.Get(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("BulkRegisterCourse: error checking contract period: %w", err)
+	}
+	if period != nil && !period.IsOpen {
+		return nil, domain.ErrContractPeriodClosed
 	}
 
 	// 1. Fetch existing registrations

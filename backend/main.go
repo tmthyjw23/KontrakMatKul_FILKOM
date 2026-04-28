@@ -55,15 +55,17 @@ func main() {
 	userRepo := repository.NewUserRepository(db)
 	courseRepo := repository.NewCourseRepository(db)
 	regRepo := repository.NewRegistrationRepository(db)
+	cpRepo := repository.NewContractPeriodRepository(db)
 
 	// Usecases (business logic layer)
 	userUC := usecase.NewUserUsecase(userRepo)
 	courseUC := usecase.NewCourseUsecase(courseRepo)
-	regUC := usecase.NewRegistrationUsecase(regRepo, courseRepo)
+	cpUC := usecase.NewContractPeriodUsecase(cpRepo)
+	regUC := usecase.NewRegistrationUsecase(regRepo, courseRepo, cpRepo)
 	authUC := usecase.NewAuthUsecase(userRepo) // Auth handles login & JWT
 
 	// Handlers (delivery layer)
-	adminHandler := deliveryhttp.NewAdminHandler(courseUC, userUC, regUC)
+	adminHandler := deliveryhttp.NewAdminHandler(courseUC, userUC, regUC, cpUC)
 	studentHandler := deliveryhttp.NewStudentHandler(courseUC, userUC, regUC)
 	authHandler := deliveryhttp.NewAuthHandler(authUC)
 

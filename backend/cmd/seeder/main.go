@@ -41,7 +41,10 @@ func main() {
 	// ── 3. Run migration 002 (schema) ────────────────────────
 	runFile(db, "docs/migrations/002_add_lecturers_prerequisites_curriculums.sql")
 
-	// ── 4. Run seed 003 (data) ───────────────────────────────
+	// ── 4. Run migration 004 (contract periods) ──────────────
+	runFile(db, "docs/migrations/004_add_contract_periods.sql")
+
+	// ── 5. Run seed 003 (data) ───────────────────────────────
 	runFile(db, "docs/migrations/003_seed_data.sql")
 
 	log.Println("🎉  Seeding complete!")
